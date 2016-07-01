@@ -11,17 +11,14 @@ namespace snapshot {
   template<typename T>
   void write_value(const T& value, std::ostream& image) {
     image.write(reinterpret_cast<const char*>(&value), sizeof(T));
-    cout << "written: " << value << " [" << sizeof(T) << "]" << std::endl;
   }
 
   template<>
   void write_value<std::string>(const std::string& content, std::ostream& image) {
     const std::string::size_type size = content.size();
     image.write(reinterpret_cast<const char*>(&size), sizeof(std::string::size_type));
-    cout << "written: " << size << " [" << sizeof(std::string::size_type) << "]" << std::endl;
     if(size > 0) {
       image.write(content.data(), size);
-      cout << "written: " << content << " [" << size << "]" << std::endl;
     }
   }
 
@@ -32,7 +29,7 @@ namespace snapshot {
     write_value(filesize, image);
 
     // open file
-    ifstream stream(file.string().c_str(), ios::binary);
+    ifstream stream(file.string().c_str(), ios::binary | ios::in);
     stream.exceptions(ifstream::failbit | ifstream::badbit);
 
     // copy content
@@ -40,8 +37,6 @@ namespace snapshot {
       istreambuf_iterator<char>(stream),
       filesize,
       ostreambuf_iterator<char>(image));
-
-    cout << "written: #file [" << filesize << "]" << std::endl;
   }
 
   void write_directory(boost::filesystem::path directory, std::ofstream& image) {
@@ -83,7 +78,7 @@ namespace snapshot {
   void create(boost::filesystem::path directory, std::ofstream& image) {
 
     // enable exceptions on image stream
-    image.exceptions(ifstream::failbit | ifstream::badbit);
+    image.exceptions(ofstream::failbit | ofstream::badbit);
 
     // write directory
     write_directory(directory, image);
@@ -92,7 +87,7 @@ namespace snapshot {
   void create(boost::filesystem::path directory, boost::filesystem::path image) {
 
       // open file
-      ofstream stream(image.string().c_str(), ios::binary | ios::trunc);
+      ofstream stream(image.string().c_str(), ios::binary | ios::trunc | ios::out);
 
       // create image
       create(directory, stream);

@@ -11,18 +11,15 @@ namespace snapshot {
   template<typename T>
   void read_value(std::istream& image, T& value) {
     image.read(reinterpret_cast<char*>(&value), sizeof(T));
-    cout << "read: " << value << " [" << sizeof(T) << "]" << " " << image.gcount() << std::endl;
   }
 
   template<>
   void read_value<std::string>(std::istream& image, std::string& content) {
     std::string::size_type size = 0;
     image.read(reinterpret_cast<char*>(&size), sizeof(std::string::size_type));
-    cout << "read: " << size << " [" << sizeof(std::string::size_type) << "]" << " " << image.gcount() << std::endl;
     content.resize(size, '\0');
     if(size > 0) {
       image.read(const_cast<char*>(content.data()), size);
-      cout << "read: " << content << " [" << size << "]" << " " << image.gcount() << std::endl;
     }
   }
 
@@ -33,16 +30,15 @@ namespace snapshot {
       read_value(image, filesize);
 
       // open file
-      ofstream stream(file.string().c_str(), ios::binary | ios::trunc);
-      stream.exceptions(ifstream::failbit | ifstream::badbit);
+      ofstream stream(file.string().c_str(), ios::binary | ios::trunc | ios::out);
+      stream.exceptions(ofstream::failbit | ofstream::badbit);
 
       // copy file content
       std::copy_n(
         istreambuf_iterator<char>(image),
         filesize,
         ostreambuf_iterator<char>(stream));
-
-      cout << "read: #file [" << filesize << "]" << " " << image.gcount() << std::endl;
+      image.seekg(1, ios::cur);
   }
 
   void read_directory(std::ifstream& image, boost::filesystem::path directory) {
@@ -88,7 +84,7 @@ namespace snapshot {
   void extract(boost::filesystem::path image, boost::filesystem::path directory) {
 
       // open file
-      ifstream stream(image.string().c_str(), ios::binary);
+      ifstream stream(image.string().c_str(), ios::binary | ios::in);
 
       // extract image
       extract(stream, directory);
