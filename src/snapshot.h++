@@ -6,4 +6,5 @@ namespace snapshot {
   void create(boost::filesystem::path directory, boost::filesystem::path image);
 
   void extract(std::istream& image, boost::filesystem::path directory);
+  void extract(boost::filesystem::path image, boost::filesystem::path directory);
 }

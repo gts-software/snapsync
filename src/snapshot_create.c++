@@ -11,14 +11,17 @@ namespace snapshot {
   template<typename T>
   void write_value(const T& value, std::ostream& image) {
     image.write(reinterpret_cast<const char*>(&value), sizeof(T));
+    cout << "written: " << value << " [" << sizeof(T) << "]" << std::endl;
   }
 
   template<>
   void write_value<std::string>(const std::string& content, std::ostream& image) {
     const std::string::size_type size = content.size();
     image.write(reinterpret_cast<const char*>(&size), sizeof(std::string::size_type));
+    cout << "written: " << size << " [" << sizeof(std::string::size_type) << "]" << std::endl;
     if(size > 0) {
       image.write(content.data(), size);
+      cout << "written: " << content << " [" << size << "]" << std::endl;
     }
   }
 
@@ -37,6 +40,8 @@ namespace snapshot {
       istreambuf_iterator<char>(stream),
       filesize,
       ostreambuf_iterator<char>(image));
+
+    cout << "written: #file [" << filesize << "]" << std::endl;
   }
 
   void write_directory(boost::filesystem::path directory, std::ofstream& image) {
