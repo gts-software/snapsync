@@ -1,3 +1,6 @@
 [submodule "librsync"]
 	path = librsync
 	url = git@github.com:core-process/librsync.git
+[submodule "libmhash"]
+	path = libmhash
+	url = git@github.com:core-process/libmhash.git

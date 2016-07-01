@@ -1,8 +1,10 @@
-#include "snapshot.h++"
+#include "snap.h++"
+#include "sync.h++"
 #include <iostream>
 
 using namespace std;
 using namespace boost::filesystem;
+using namespace snapsync;
 
 int main(int argc, char** argv) {
 
@@ -16,12 +18,12 @@ int main(int argc, char** argv) {
   try {
     std::string command = argv[1];
     if(command == "create") {
-      snapshot::create(path(argv[2]), path(argv[3]));
+      snap::create(path(argv[2]), path(argv[3]));
       return 0;
     }
     else
     if(command == "extract") {
-      snapshot::extract(path(argv[2]), path(argv[3]));
+      snap::extract(path(argv[2]), path(argv[3]));
       return 0;
     }
     else {

@@ -1,6 +1,6 @@
 #include <boost/filesystem.hpp>
 
-namespace snapshot {
+namespace snapsync { namespace snap {
 
   enum NODE_TYPE {
     NODE_DIRECTORY,
@@ -8,4 +8,4 @@ namespace snapshot {
     NODE_UNKNOWN,
     NODE_NONE
   };
-}
+} }

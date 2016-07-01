@@ -1,12 +1,12 @@
-#include "snapshot.h++"
-#include "snapshot_internal.h++"
+#include "snap.h++"
+#include "snap_internal.h++"
 #include "fileno.h++"
 #include <vector>
 
 using namespace std;
 using namespace boost::filesystem;
 
-namespace snapshot {
+namespace snapsync { namespace snap {
 
   template<typename T>
   void write_value(const T& value, std::ostream& image) {
@@ -93,4 +93,4 @@ namespace snapshot {
       create(directory, stream);
   }
 
-}
+} }

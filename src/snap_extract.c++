@@ -1,12 +1,12 @@
-#include "snapshot.h++"
-#include "snapshot_internal.h++"
+#include "snap.h++"
+#include "snap_internal.h++"
 #include "fileno.h++"
 #include <vector>
 
 using namespace std;
 using namespace boost::filesystem;
 
-namespace snapshot {
+namespace snapsync { namespace snap {
 
   template<typename T>
   void read_value(std::istream& image, T& value) {
@@ -90,4 +90,4 @@ namespace snapshot {
       extract(stream, directory);
   }
 
-}
+} }
