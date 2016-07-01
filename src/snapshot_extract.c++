@@ -31,7 +31,7 @@ namespace snapshot {
 
       // open file
       ofstream stream(file.string().c_str(), ios::binary | ios::trunc | ios::out);
-      stream.exceptions(ofstream::failbit | ofstream::badbit);
+      stream.exceptions(ofstream::failbit | ofstream::badbit | ofstream::eofbit);
 
       // copy file content
       std::copy_n(
@@ -75,7 +75,7 @@ namespace snapshot {
   void extract(std::ifstream& image, boost::filesystem::path directory) {
 
     // enable exceptions on image stream
-    image.exceptions(ifstream::failbit | ifstream::badbit);
+    image.exceptions(ifstream::failbit | ifstream::badbit | ifstream::eofbit);
 
     // read directory
     read_directory(image, directory);
