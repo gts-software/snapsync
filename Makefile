@@ -2,9 +2,9 @@ CC=gcc
 CXX=g++
 
 CFLAGS=-Wall -g
-CXXFLAGS=-Wall -g -std=c++11
+CXXFLAGS=-Wall -g -std=c++11 -Ilibrsync/src
 
-CXXLIBS=-lboost_system -lboost_filesystem
+CXXLIBS=-lboost_system -lboost_filesystem -Llibrsync -lrsync
 CXXOBJECTS := $(patsubst src/%.c++,build/%.obj,$(wildcard src/*.c++))
 
 build/snapdiff: $(CXXOBJECTS)
