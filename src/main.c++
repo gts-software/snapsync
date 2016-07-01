@@ -7,12 +7,14 @@ using namespace boost::filesystem;
 int main(int argc, char** argv) {
 
   if(argc < 3) {
-    std::cerr << "Usage: " << argv[0] << " <directory> <image>" << std::endl;
+    std::cerr << "Usage: " << std::endl
+      << "- " << argv[0] << " create <directory> <image>" << std::endl
+      << "- " << argv[0] << " extract <image> <directory>" << std::endl;
     return 1;
   }
 
   try {
-    snapshot::create(path(argv[1]), path(argv[2]));
+    snapshot::create(path(argv[2]), path(argv[3]));
     return 0;
   }
   catch(const std::exception& e) {
