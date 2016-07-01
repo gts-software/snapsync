@@ -137,7 +137,7 @@ fileno_hack(const std::basic_ios<charT, traits>& stream)
 
 //! 8-Bit character instantiation: fileno(ios).
 template <>
-int
+inline int
 fileno<char>(const std::ios& stream)
 {
     return fileno_hack(stream);
@@ -146,7 +146,7 @@ fileno<char>(const std::ios& stream)
 #if !(defined(__GLIBCXX__) || defined(__GLIBCPP__)) || (defined(_GLIBCPP_USE_WCHAR_T) || defined(_GLIBCXX_USE_WCHAR_T))
 //! Wide character instantiation: fileno(wios).
 template <>
-int
+inline int
 fileno<wchar_t>(const std::wios& stream)
 {
     return fileno_hack(stream);

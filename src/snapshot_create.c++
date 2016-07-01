@@ -1,4 +1,5 @@
 #include "snapshot.h++"
+#include "snapshot_internal.h++"
 #include "fileno.h++"
 #include <vector>
 
@@ -6,13 +7,6 @@ using namespace std;
 using namespace boost::filesystem;
 
 namespace snapshot {
-
-  enum NODE_TYPE {
-    NODE_DIRECTORY,
-    NODE_FILE,
-    NODE_UNKNOWN,
-    NODE_NONE
-  };
 
   template<typename T>
   void write_value(const T& value, std::ostream& image) {
@@ -97,12 +91,6 @@ namespace snapshot {
 
       // create image
       create(directory, stream);
-  }
-
-  void extract(std::ifstream& image, boost::filesystem::path directory) {
-
-    // enable exceptions on image stream
-    image.exceptions(ifstream::failbit | ifstream::badbit);
   }
 
 }
