@@ -15,9 +15,9 @@ namespace snapsync { namespace snap {
 
   template<>
   void read_value<std::string>(std::istream& image, std::string& content) {
-    std::string::size_type size = 0;
-    image.read(reinterpret_cast<char*>(&size), sizeof(std::string::size_type));
-    content.resize(size, '\0');
+    std::uint64_t size = 0;
+    image.read(reinterpret_cast<char*>(&size), sizeof(std::uint64_t));
+    content.resize(static_cast<std::size_t>(size), '\0');
     if(size > 0) {
       image.read(const_cast<char*>(content.data()), size);
     }
@@ -26,7 +26,7 @@ namespace snapsync { namespace snap {
   void read_file(std::ifstream& image, boost::filesystem::path file) {
 
       // read file size
-      size_t filesize = 0;
+      std::uint64_t filesize = 0;
       read_value(image, filesize);
 
       // open file
@@ -36,7 +36,7 @@ namespace snapsync { namespace snap {
       // copy file content
       std::copy_n(
         istreambuf_iterator<char>(image),
-        filesize,
+        static_cast<std::size_t>(filesize),
         ostreambuf_iterator<char>(stream));
       image.seekg(1, ios::cur);
   }
@@ -47,7 +47,7 @@ namespace snapsync { namespace snap {
     create_directories(directory);
 
     // read children count
-    size_t size = 0;
+    std::uint64_t size = 0;
     read_value(image, size);
 
     // extract children

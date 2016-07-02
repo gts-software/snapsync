@@ -15,8 +15,8 @@ namespace snapsync { namespace snap {
 
   template<>
   void write_value<std::string>(const std::string& content, std::ostream& image) {
-    const std::string::size_type size = content.size();
-    image.write(reinterpret_cast<const char*>(&size), sizeof(std::string::size_type));
+    const std::uint64_t size = static_cast<std::uint64_t>(content.size());
+    image.write(reinterpret_cast<const char*>(&size), sizeof(std::uint64_t));
     if(size > 0) {
       image.write(content.data(), size);
     }
@@ -25,7 +25,7 @@ namespace snapsync { namespace snap {
   void write_file(boost::filesystem::path file, std::ofstream& image) {
 
     // write file size
-    const size_t filesize = file_size(file);
+    const std::uint64_t filesize = static_cast<std::uint64_t>(file_size(file));
     write_value(filesize, image);
 
     // open file
@@ -35,7 +35,7 @@ namespace snapsync { namespace snap {
     // copy content
     std::copy_n(
       istreambuf_iterator<char>(stream),
-      filesize,
+      static_cast<std::size_t>(filesize),
       ostreambuf_iterator<char>(image));
   }
 
@@ -47,7 +47,8 @@ namespace snapsync { namespace snap {
     sort(children.begin(), children.end());
 
     // write size
-    write_value(children.size(), image);
+    std::uint64_t count = static_cast<std::uint64_t>(children.size());
+    write_value(count, image);
 
     // iterate children
     for(auto child : children) {

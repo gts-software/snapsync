@@ -2,7 +2,7 @@
 
 namespace snapsync { namespace snap {
 
-  enum NODE_TYPE {
+  enum NODE_TYPE : std::uint8_t {
     NODE_DIRECTORY,
     NODE_FILE,
     NODE_UNKNOWN,
