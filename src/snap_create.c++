@@ -16,7 +16,7 @@ namespace snapsync { namespace snap {
   template<>
   void write_value<std::string>(const std::string& content, std::ostream& image) {
     const std::uint64_t size = static_cast<std::uint64_t>(content.size());
-    image.write(reinterpret_cast<const char*>(&size), sizeof(std::uint64_t));
+    write_value(size, image);
     if(size > 0) {
       image.write(content.data(), size);
     }

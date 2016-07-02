@@ -16,7 +16,7 @@ namespace snapsync { namespace snap {
   template<>
   void read_value<std::string>(std::istream& image, std::string& content) {
     std::uint64_t size = 0;
-    image.read(reinterpret_cast<char*>(&size), sizeof(std::uint64_t));
+    read_value(image, size);
     content.resize(static_cast<std::size_t>(size), '\0');
     if(size > 0) {
       image.read(const_cast<char*>(content.data()), size);
