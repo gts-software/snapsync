@@ -1,7 +1,8 @@
 #include "snap.h++"
 #include "snap_internal.h++"
-#include "fileno.h++"
+#include "byteorder.h++"
 #include <vector>
+#include <fstream>
 
 using namespace std;
 using namespace boost::filesystem;
@@ -10,7 +11,8 @@ namespace snapsync { namespace snap {
 
   template<typename T>
   void write_value(const T& value, std::ostream& image) {
-    image.write(reinterpret_cast<const char*>(&value), sizeof(T));
+    const T target = byteorder::htobe(value);
+    image.write(reinterpret_cast<const char*>(&target), sizeof(T));
   }
 
   template<>

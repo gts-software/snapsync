@@ -1,7 +1,8 @@
 #include "snap.h++"
 #include "snap_internal.h++"
-#include "fileno.h++"
+#include "byteorder.h++"
 #include <vector>
+#include <fstream>
 
 using namespace std;
 using namespace boost::filesystem;
@@ -10,7 +11,9 @@ namespace snapsync { namespace snap {
 
   template<typename T>
   void read_value(std::istream& image, T& value) {
-    image.read(reinterpret_cast<char*>(&value), sizeof(T));
+    T source = T();
+    image.read(reinterpret_cast<char*>(&source), sizeof(T));
+    value = byteorder::betoh(source);
   }
 
   template<>

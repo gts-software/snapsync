@@ -9,3 +9,22 @@ namespace snapsync { namespace snap {
     NODE_NONE
   };
 } }
+
+namespace byteorder {
+
+    template<typename T>
+    T htobe(const T& value);
+
+    template<>
+    inline snapsync::snap::NODE_TYPE htobe<snapsync::snap::NODE_TYPE>(const snapsync::snap::NODE_TYPE& value) {
+      return value;
+    }
+
+    template<typename T>
+    T betoh(const T& value);
+
+    template<>
+    inline snapsync::snap::NODE_TYPE betoh<snapsync::snap::NODE_TYPE>(const snapsync::snap::NODE_TYPE& value) {
+      return value;
+    }
+}
