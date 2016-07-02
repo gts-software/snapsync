@@ -9,9 +9,9 @@ cmake .
 make
 make check
 
-# Build libmhash
-cd "$ROOTDIR/libmhash"
-./configure LDFLAGS="-static"
+# Build cryptopp
+cd "$ROOTDIR/cryptopp"
+cmake .
 make
 
 # Done

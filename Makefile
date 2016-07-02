@@ -4,8 +4,8 @@ CXX=g++
 CFLAGS=-Wall -g
 CXXFLAGS=-Wall -g -std=c++11
 
-CXXINCLUDES=-Ilibrsync/src -Ilibmhash/include
-CXXLIBS=-lboost_system -lboost_filesystem -Llibrsync -lrsync -Llibmhash/lib/.libs -lmhash
+CXXINCLUDES=-Ilibrsync/src -Icryptopp
+CXXLIBS=-lboost_system -lboost_filesystem -Llibrsync -lrsync -Lcryptopp -lcryptopp
 CXXOBJECTS := $(patsubst src/%.c++,build/%.obj,$(wildcard src/*.c++))
 
 build/snapsync: $(CXXOBJECTS)
