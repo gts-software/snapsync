@@ -14,7 +14,7 @@ int main(int argc, char** argv) {
       << "3) " << argv[0] << " patch <patch:in> <base:in> <target:out>" << std::endl;
   };
 
-  if(argc < 1) {
+  if(argc < 2) {
     usage();
     return 1;
   }
