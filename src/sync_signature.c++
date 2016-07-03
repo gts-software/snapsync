@@ -34,9 +34,9 @@ namespace snapsync { namespace sync {
 
       // fill input buffer
       if(!buffer.eof_in && (BUFFER_SIZE - buffer.avail_in) > 0) {
-        base.read(buffer_in + buffer.avail_in, BUFFER_SIZE - buffer.avail_in);
-        buffer.avail_in += base.gcount();
-        buffer.eof_in = base.eof();
+        auto count = base.rdbuf()->sgetn(buffer_in + buffer.avail_in, BUFFER_SIZE - buffer.avail_in);
+        buffer.avail_in += count;
+        buffer.eof_in = (count == 0);
       }
 
       // perform iteration
