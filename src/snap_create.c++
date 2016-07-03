@@ -94,6 +94,7 @@ namespace snapsync { namespace snap {
   void create(boost::filesystem::path directory, std::ofstream& image) {
 
     // enable exceptions on image stream
+    auto oldExceptions = image.exceptions();
     image.exceptions(ofstream::failbit | ofstream::badbit | ofstream::eofbit);
 
     // keep space for hash
@@ -113,6 +114,7 @@ namespace snapsync { namespace snap {
 
     // flush
     image.flush();
+    image.exceptions(oldExceptions);
   }
 
   void create(boost::filesystem::path directory, boost::filesystem::path image) {

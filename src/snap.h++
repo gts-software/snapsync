@@ -1,4 +1,6 @@
 #include <boost/filesystem.hpp>
+#include <istream>
+#include <ostream>
 
 namespace snapsync { namespace snap {
 

@@ -85,6 +85,7 @@ namespace snapsync { namespace snap {
   void extract(std::ifstream& image, boost::filesystem::path directory) {
 
     // enable exceptions on image stream
+    auto oldExceptions = image.exceptions();
     image.exceptions(ifstream::failbit | ifstream::badbit | ifstream::eofbit);
 
     // read hash
@@ -114,6 +115,9 @@ namespace snapsync { namespace snap {
 
     // read directory
     read_directory(image, directory);
+
+    // done
+    image.exceptions(oldExceptions);
   }
 
   void extract(boost::filesystem::path image, boost::filesystem::path directory) {
