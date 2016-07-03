@@ -45,6 +45,10 @@ namespace snapsync { namespace snap {
         static_cast<std::size_t>(filesize),
         ostreambuf_iterator<char>(stream));
       image.seekg(1, ios::cur);
+
+      // flush and close
+      stream.flush();
+      stream.close();
   }
 
   void read_directory(std::ifstream& image, boost::filesystem::path directory) {
@@ -91,11 +95,17 @@ namespace snapsync { namespace snap {
     CryptoPP::SHA1 hash;
     byte digest2[CryptoPP::SHA1::DIGESTSIZE];
 
+    image.exceptions(ifstream::goodbit);
+
     CryptoPP::FileSource fs(image, true,
         new CryptoPP::HashFilter(hash,
           new CryptoPP::ArraySink(digest2, CryptoPP::SHA1::DIGESTSIZE)
         )
       );
+
+    image.clear();
+    image.seekg(CryptoPP::SHA1::DIGESTSIZE, ios::beg);
+    image.exceptions(ifstream::failbit | ifstream::badbit | ifstream::eofbit);
 
     // compare hashes
     if(memcmp(digest1, digest2, CryptoPP::SHA1::DIGESTSIZE) != 0) {
@@ -103,7 +113,6 @@ namespace snapsync { namespace snap {
     }
 
     // read directory
-    image.seekg(CryptoPP::SHA1::DIGESTSIZE, ios::beg);
     read_directory(image, directory);
   }
 

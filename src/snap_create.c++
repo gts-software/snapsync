@@ -111,9 +111,8 @@ namespace snapsync { namespace snap {
     image.seekp(0, ios::beg);
     image.write(reinterpret_cast<char*>(&digest[0]), CryptoPP::SHA1::DIGESTSIZE);
 
-    // flush and close
+    // flush
     image.flush();
-    image.close();
   }
 
   void create(boost::filesystem::path directory, boost::filesystem::path image) {
@@ -123,6 +122,9 @@ namespace snapsync { namespace snap {
 
       // create image
       create(directory, stream);
+
+      // close
+      stream.close();
   }
 
 } }
