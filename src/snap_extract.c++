@@ -3,6 +3,9 @@
 #include "byteorder.h++"
 #include <vector>
 #include <fstream>
+#include <cryptopp/sha.h>
+#include <cryptopp/filters.h>
+#include <cryptopp/files.h>
 
 using namespace std;
 using namespace boost::filesystem;
@@ -80,7 +83,27 @@ namespace snapsync { namespace snap {
     // enable exceptions on image stream
     image.exceptions(ifstream::failbit | ifstream::badbit | ifstream::eofbit);
 
+    // read hash
+    byte digest1[CryptoPP::SHA1::DIGESTSIZE];
+    image.read(reinterpret_cast<char*>(&digest1[0]), CryptoPP::SHA1::DIGESTSIZE);
+
+    // calculate hash of file
+    CryptoPP::SHA1 hash;
+    byte digest2[CryptoPP::SHA1::DIGESTSIZE];
+
+    CryptoPP::FileSource fs(image, true,
+        new CryptoPP::HashFilter(hash,
+          new CryptoPP::ArraySink(digest2, CryptoPP::SHA1::DIGESTSIZE)
+        )
+      );
+
+    // compare hashes
+    if(memcmp(digest1, digest2, CryptoPP::SHA1::DIGESTSIZE) != 0) {
+      throw InvalidFileException();
+    }
+
     // read directory
+    image.seekg(CryptoPP::SHA1::DIGESTSIZE, ios::beg);
     read_directory(image, directory);
   }
 

@@ -4,7 +4,6 @@
 #include <vector>
 #include <fstream>
 #include <cryptopp/sha.h>
-#include <cryptopp/hex.h>
 
 using namespace std;
 using namespace boost::filesystem;
@@ -97,6 +96,9 @@ namespace snapsync { namespace snap {
     // enable exceptions on image stream
     image.exceptions(ofstream::failbit | ofstream::badbit | ofstream::eofbit);
 
+    // keep space for hash
+    image.seekp(CryptoPP::SHA1::DIGESTSIZE, ios::cur);
+
     // write directory
     CryptoPP::SHA1 hash;
     write_directory(directory, image, hash);
@@ -105,17 +107,13 @@ namespace snapsync { namespace snap {
     byte digest[CryptoPP::SHA1::DIGESTSIZE];
     hash.Final(digest);
 
-    // convert digest to hex string
-    {
-      CryptoPP::HexEncoder encoder;
-      std::string output;
+    // write hash to file
+    image.seekp(0, ios::beg);
+    image.write(reinterpret_cast<char*>(&digest[0]), CryptoPP::SHA1::DIGESTSIZE);
 
-      encoder.Attach( new CryptoPP::StringSink( output ) );
-      encoder.Put( digest, sizeof(digest) );
-      encoder.MessageEnd();
-
-      std::cout << output << std::endl;
-    }
+    // flush and close
+    image.flush();
+    image.close();
   }
 
   void create(boost::filesystem::path directory, boost::filesystem::path image) {

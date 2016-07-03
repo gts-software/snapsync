@@ -2,6 +2,8 @@
 
 namespace snapsync { namespace snap {
 
+  class InvalidFileException : public std::exception { };
+
   void create(boost::filesystem::path directory, std::ostream& image);
   void create(boost::filesystem::path directory, boost::filesystem::path image);
 
