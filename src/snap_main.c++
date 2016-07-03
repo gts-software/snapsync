@@ -10,8 +10,8 @@ int main(int argc, char** argv) {
 
   if(argc < 4) {
     std::cerr << "Usage: " << std::endl
-      << "- " << argv[0] << " create <directory> <image>" << std::endl
-      << "- " << argv[0] << " extract <image> <directory>" << std::endl;
+      << "1) " << argv[0] << " create <directory> <image>" << std::endl
+      << "2) " << argv[0] << " extract <image> <directory>" << std::endl;
     return 1;
   }
 
