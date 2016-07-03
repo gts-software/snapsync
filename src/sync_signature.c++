@@ -1,4 +1,5 @@
 #include "sync.h++"
+#include <fstream>
 #include <librsync.h>
 
 using namespace std;
@@ -68,12 +69,26 @@ namespace snapsync { namespace sync {
       throw std::runtime_error("could not create signature");
     }
 
+    // flush
+    signature.flush();
+
     // reset exceptions flags
     base.exceptions(baseOldExceptions);
     signature.exceptions(signatureOldExceptions);
   }
 
   void signature(boost::filesystem::path basePath, boost::filesystem::path signaturePath) {
+
+      // open files
+      ifstream base(basePath.string().c_str(), ios::binary | ios::in);
+      ofstream signature(signaturePath.string().c_str(), ios::binary | ios::trunc | ios::out);
+
+      // run operation
+      sync::signature(base, signature);
+
+      // close files
+      base.close();
+      signature.close();
   }
 
 } }
