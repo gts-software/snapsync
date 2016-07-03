@@ -1,5 +1,4 @@
 #include "snap.h++"
-#include "sync.h++"
 #include <iostream>
 
 using namespace std;
@@ -8,10 +7,14 @@ using namespace snapsync;
 
 int main(int argc, char** argv) {
 
-  if(argc < 4) {
+  auto usage = [&argv]{
     std::cerr << "Usage: " << std::endl
-      << "1) " << argv[0] << " create <directory> <image>" << std::endl
-      << "2) " << argv[0] << " extract <image> <directory>" << std::endl;
+      << "1) " << argv[0] << " create <directory:in> <image:out>" << std::endl
+      << "2) " << argv[0] << " extract <image:in> <directory:out>" << std::endl;
+  };
+
+  if(argc < 4) {
+    usage();
     return 1;
   }
 
@@ -27,15 +30,16 @@ int main(int argc, char** argv) {
       return 0;
     }
     else {
-      return 2;
+      usage();
+      return 1;
     }
   }
   catch(const std::exception& e) {
     std::cerr << "Exception: " << e.what() << std::endl;
-    return 3;
+    return 2;
   }
   catch(...) {
     std::cerr << "Exception: unknown" << std::endl;
-    return 3;
+    return 2;
   }
 }

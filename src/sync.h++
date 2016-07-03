@@ -10,7 +10,7 @@ namespace snapsync { namespace sync {
   void delta(std::istream& signature, std::istream& target, std::ostream& patch);
   void delta(boost::filesystem::path signature, boost::filesystem::path target, boost::filesystem::path patch);
 
-  void patch(std::istream& patch, std::iostream& base);
-  void patch(boost::filesystem::path patch, boost::filesystem::path base);
+  void patch(std::istream& patch, std::istream& base, std::ostream& target);
+  void patch(boost::filesystem::path patch, boost::filesystem::path base, boost::filesystem::path target);
 
 } }
