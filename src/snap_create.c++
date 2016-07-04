@@ -109,8 +109,10 @@ namespace snapsync { namespace snap {
     hash.Final(digest);
 
     // write hash to file
+    auto oldpos = image.tellp();
     image.seekp(0, ios::beg);
     image.write(reinterpret_cast<char*>(&digest[0]), CryptoPP::SHA1::DIGESTSIZE);
+    image.seekp(oldpos, ios::beg);
 
     // flush
     image.flush();
