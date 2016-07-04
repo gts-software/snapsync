@@ -10,6 +10,10 @@ namespace snapsync { namespace sync {
 
   void delta(std::istream& signature, std::istream& target, std::ostream& patch) {
 
+      constexpr size_t BUFFER_SIZE = 1024;
+      char buffer_in[BUFFER_SIZE];
+      char buffer_out[BUFFER_SIZE];
+
       // set exceptions flags
       auto signatureOldExceptions = signature.exceptions();
       signature.exceptions(istream::failbit | istream::badbit);
@@ -31,9 +35,10 @@ namespace snapsync { namespace sync {
       CryptoPP::SHA1 hashSignature2;
       byte digestSignature2[CryptoPP::SHA1::DIGESTSIZE];
 
-      signature.exceptions(ifstream::goodbit);
+      for(size_t count = 0; (count = signature.rdbuf()->sgetn(buffer_in, BUFFER_SIZE)) != 0;) {
+        hashSignature2.Update(reinterpret_cast<const byte*>(buffer_in), count);
+      }
 
-      CryptoPP::FileSource fs(signature, true, new CryptoPP::HashFilter(hashSignature2));
       hashSignature2.Update(reinterpret_cast<const byte*>(digestBase), CryptoPP::SHA1::DIGESTSIZE);
       hashSignature2.Final(digestSignature2);
 
@@ -47,10 +52,6 @@ namespace snapsync { namespace sync {
       }
 
       // load signature into memory
-      constexpr size_t BUFFER_SIZE = 1024;
-      char buffer_in[BUFFER_SIZE];
-      char buffer_out[BUFFER_SIZE];
-
       rs_buffers_t buffer;
       buffer.next_out = buffer_out;
       buffer.avail_out = BUFFER_SIZE;
