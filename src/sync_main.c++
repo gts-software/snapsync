@@ -9,7 +9,7 @@ int main(int argc, char** argv) {
 
   auto usage = [&argv]{
     std::cerr << "Usage: " << std::endl
-      << "1) " << argv[0] << " signature <base:in> <signature:out>" << std::endl
+      << "1) " << argv[0] << " signature <base:in> <signature:out> [block-length] [sum-length]" << std::endl
       << "2) " << argv[0] << " delta <signature:in> <target:in> <patch:out>" << std::endl
       << "3) " << argv[0] << " patch <patch:in> <base:in> <target:out>" << std::endl;
   };
@@ -26,7 +26,14 @@ int main(int argc, char** argv) {
         usage();
         return 1;
       }
-      sync::signature(path(argv[2]), path(argv[3]));
+      size_t blockLen = 0, sumLen = 0;
+      if(argc >= 5) {
+        blockLen = atoi(argv[4]);
+      }
+      if(argc >= 6) {
+        sumLen = atoi(argv[5]);
+      }
+      sync::signature(path(argv[2]), path(argv[3]), blockLen, sumLen);
       return 0;
     }
     else

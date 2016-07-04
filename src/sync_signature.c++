@@ -7,7 +7,15 @@ using namespace std;
 
 namespace snapsync { namespace sync {
 
-  void signature(std::istream& base, std::ostream& signature) {
+  void signature(std::istream& base, std::ostream& signature, size_t blockLength, size_t sumLength) {
+
+    if(!blockLength) {
+      blockLength = RS_DEFAULT_BLOCK_LEN;
+    }
+
+    if(!sumLength) {
+      sumLength = RS_BLAKE2_SUM_LENGTH;
+    }
 
     // set exceptions flags
     auto baseOldExceptions = base.exceptions();
@@ -35,7 +43,7 @@ namespace snapsync { namespace sync {
     CryptoPP::SHA1 hashSig;
 
     // run job
-    auto job = rs_sig_begin(RS_DEFAULT_BLOCK_LEN, 0, RS_BLAKE2_SIG_MAGIC);
+    auto job = rs_sig_begin(blockLength, sumLength, RS_BLAKE2_SIG_MAGIC);
 
     while(true) {
 
@@ -105,14 +113,14 @@ namespace snapsync { namespace sync {
     signature.exceptions(signatureOldExceptions);
   }
 
-  void signature(boost::filesystem::path basePath, boost::filesystem::path signaturePath) {
+  void signature(boost::filesystem::path basePath, boost::filesystem::path signaturePath, size_t blockLength, size_t sumLength) {
 
       // open files
       ifstream base(basePath.string().c_str(), ios::binary | ios::in);
       ofstream signature(signaturePath.string().c_str(), ios::binary | ios::trunc | ios::out);
 
       // run operation
-      sync::signature(base, signature);
+      sync::signature(base, signature, blockLength, sumLength);
 
       // close files
       base.close();
