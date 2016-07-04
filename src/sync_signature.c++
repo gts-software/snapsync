@@ -16,8 +16,8 @@ namespace snapsync { namespace sync {
     auto signatureOldExceptions = signature.exceptions();
     signature.exceptions(ostream::failbit | ostream::badbit);
 
-    // keep space for hash
-    signature.seekp(CryptoPP::SHA1::DIGESTSIZE, ios::cur);
+    // keep space for hashes
+    signature.seekp(CryptoPP::SHA1::DIGESTSIZE * 2, ios::cur);
 
     // read base and write signature
     constexpr size_t BUFFER_SIZE = 1024;
@@ -83,6 +83,8 @@ namespace snapsync { namespace sync {
     hashBase.Final(digestBase);
 
     // write base hash to file and include it in signature hash
+    auto endpos = signature.tellp();
+    signature.seekp(CryptoPP::SHA1::DIGESTSIZE, ios::beg);
     signature.write(reinterpret_cast<const char*>(digestBase), CryptoPP::SHA1::DIGESTSIZE);
     hashSig.Update(digestBase, CryptoPP::SHA1::DIGESTSIZE);
 
@@ -91,10 +93,9 @@ namespace snapsync { namespace sync {
     hashSig.Final(digestSig);
 
     // write signature hash to file
-    auto oldpos = signature.tellp();
     signature.seekp(0, ios::beg);
     signature.write(reinterpret_cast<char*>(&digestSig[0]), CryptoPP::SHA1::DIGESTSIZE);
-    signature.seekp(oldpos, ios::beg);
+    signature.seekp(endpos, ios::beg);
 
     // flush
     signature.flush();
