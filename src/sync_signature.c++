@@ -31,7 +31,8 @@ namespace snapsync { namespace sync {
     buffer.avail_in = 0;
     buffer.eof_in = 0;
 
-    CryptoPP::SHA1 hash;
+    CryptoPP::SHA1 hashBase;
+    CryptoPP::SHA1 hashSig;
 
     // run job
     auto job = rs_sig_begin(RS_DEFAULT_BLOCK_LEN, 0, RS_BLAKE2_SIG_MAGIC);
@@ -41,6 +42,7 @@ namespace snapsync { namespace sync {
       // fill input buffer
       if(!buffer.eof_in && (BUFFER_SIZE - buffer.avail_in) > 0) {
         auto count = base.rdbuf()->sgetn(buffer_in + buffer.avail_in, BUFFER_SIZE - buffer.avail_in);
+        hashBase.Update(reinterpret_cast<const byte*>(buffer_in + buffer.avail_in), count);
         buffer.avail_in += count;
         buffer.eof_in = (count == 0);
       }
@@ -61,7 +63,7 @@ namespace snapsync { namespace sync {
       // write output buffer
       if(buffer.avail_out < BUFFER_SIZE) {
         signature.write(buffer_out, BUFFER_SIZE - buffer.avail_out);
-        hash.Update(reinterpret_cast<const byte*>(buffer_out), BUFFER_SIZE - buffer.avail_out);
+        hashSig.Update(reinterpret_cast<const byte*>(buffer_out), BUFFER_SIZE - buffer.avail_out);
       }
       buffer.next_out = buffer_out;
       buffer.avail_out = BUFFER_SIZE;
@@ -76,14 +78,22 @@ namespace snapsync { namespace sync {
       throw std::runtime_error("could not create signature");
     }
 
-    // finalize hash
-    byte digest[CryptoPP::SHA1::DIGESTSIZE];
-    hash.Final(digest);
+    // finalize base hash
+    byte digestBase[CryptoPP::SHA1::DIGESTSIZE];
+    hashBase.Final(digestBase);
 
-    // write hash to file
+    // write base hash to file and include it in signature hash
+    signature.write(reinterpret_cast<const char*>(digestBase), CryptoPP::SHA1::DIGESTSIZE);
+    hashSig.Update(digestBase, CryptoPP::SHA1::DIGESTSIZE);
+
+    // finalize signature hash
+    byte digestSig[CryptoPP::SHA1::DIGESTSIZE];
+    hashSig.Final(digestSig);
+
+    // write signature hash to file
     auto oldpos = signature.tellp();
     signature.seekp(0, ios::beg);
-    signature.write(reinterpret_cast<char*>(&digest[0]), CryptoPP::SHA1::DIGESTSIZE);
+    signature.write(reinterpret_cast<char*>(&digestSig[0]), CryptoPP::SHA1::DIGESTSIZE);
     signature.seekp(oldpos, ios::beg);
 
     // flush
