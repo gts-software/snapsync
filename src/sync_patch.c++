@@ -23,7 +23,7 @@ namespace snapsync { namespace sync {
     target.exceptions(targetOldExceptions);
   }
 
-  void patch(boost::filesystem::path patch, boost::filesystem::path base, boost::filesystem::path target) {
+  void patch(boost::filesystem::path patchPath, boost::filesystem::path basePath, boost::filesystem::path targetPath) {
   }
 
 } }
