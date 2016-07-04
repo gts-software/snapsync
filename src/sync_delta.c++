@@ -44,7 +44,6 @@ namespace snapsync { namespace sync {
 
       signature.clear();
       signature.seekg(CryptoPP::SHA1::DIGESTSIZE * 2, ios::beg);
-      signature.exceptions(ifstream::failbit | ifstream::badbit | ifstream::eofbit);
 
       // validate hash of signature
       if(memcmp(digestSignature, digestSignature2, CryptoPP::SHA1::DIGESTSIZE) != 0) {
