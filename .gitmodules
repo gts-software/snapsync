@@ -1,6 +1,6 @@
 [submodule "librsync"]
 	path = librsync
-	url = git@github.com:core-process/librsync.git
+	url = git@github.com:process-team/pt-librsync.git
 [submodule "cryptopp"]
 	path = cryptopp
-	url = git@github.com:weidai11/cryptopp.git
+	url = git@github.com:process-team/pt-cryptopp.git
