@@ -11,7 +11,13 @@
                 "../src/sync_patch.c++",
             ],
             "include_dirs": [
-                "<!(node -e \"require('nan')\")"
+                "<!(node -e \"require('nan')\")",
+                "../librsync/src"
+            ],
+            "libraries": [
+                "-lboost_system", "-lboost_filesystem",
+                "-L../../librsync", "-lrsync",
+                "-L../../cryptopp", "-lcryptopp",
             ],
             "cflags": [ "-std=c++11" ],
             'cflags!': [ '-fno-exceptions' ],
