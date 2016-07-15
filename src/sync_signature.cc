@@ -1,4 +1,4 @@
-#include "sync.h++"
+#include "sync.hh"
 #include <fstream>
 #include <librsync.h>
 #include <cryptopp/sha.h>

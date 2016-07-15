@@ -1,6 +1,6 @@
-#include "snap.h++"
-#include "snap_internal.h++"
-#include "byteorder.h++"
+#include "snap.hh"
+#include "snap_internal.hh"
+#include "byteorder.hh"
 #include <vector>
 #include <fstream>
 #include <cryptopp/sha.h>

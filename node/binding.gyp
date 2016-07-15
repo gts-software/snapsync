@@ -2,17 +2,21 @@
     "targets": [
         {
             "target_name": "snapsync",
+            "defines": [
+                "BUILD_NODE_MODULE",
+            ],
             "sources": [
                 "../src/node.cc",
-                "../src/snap_create.c++",
-                "../src/snap_extract.c++",
-                "../src/sync_signature.c++",
-                "../src/sync_delta.c++",
-                "../src/sync_patch.c++",
+                "../src/snap_create.cc",
+                "../src/snap_extract.cc",
+                "../src/sync_signature.cc",
+                "../src/sync_delta.cc",
+                "../src/sync_patch.cc",
             ],
             "include_dirs": [
                 "<!(node -e \"require('nan')\")",
-                "../librsync/src"
+                "../librsync/src",
+                "../"
             ],
             "libraries": [
                 "-lboost_system", "-lboost_filesystem",
@@ -20,8 +24,8 @@
                 "-L../../cryptopp", "-lcryptopp",
             ],
             "cflags": [ "-std=c++11" ],
-            'cflags!': [ '-fno-exceptions' ],
-            'cflags_cc!': [ '-fno-exceptions' ]
+            'cflags!': [ '-fno-exceptions', '-fno-rtti' ],
+            'cflags_cc!': [ '-fno-exceptions', '-fno-rtti' ]
         }
     ]
 }

@@ -1,6 +1,8 @@
+#if defined(BUILD_NODE_MODULE)
+
 #include <nan.h>
-#include "snap.h++"
-#include "sync.h++"
+#include "snap.hh"
+#include "sync.hh"
 
 using namespace snapsync;
 
@@ -204,3 +206,5 @@ NAN_MODULE_INIT(init) {
 }
 
 NODE_MODULE(snapsync, init)
+
+#endif

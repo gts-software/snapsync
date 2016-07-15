@@ -1,4 +1,4 @@
-#include "sync.h++"
+#include "sync.hh"
 #include <iostream>
 
 using namespace std;

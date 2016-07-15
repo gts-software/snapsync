@@ -11,7 +11,7 @@ make check
 
 # Build cryptopp
 cd "$ROOTDIR/cryptopp"
-make CXXFLAGS="-std=c++11"
+make CXXFLAGS="-std=c++11 -fPIC"
 make test
 
 # Done

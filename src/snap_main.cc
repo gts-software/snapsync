@@ -1,4 +1,4 @@
-#include "snap.h++"
+#include "snap.hh"
 #include <iostream>
 
 using namespace std;
