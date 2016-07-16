@@ -23,7 +23,6 @@
                 "-L../../librsync", "-lrsync",
                 "-L../../cryptopp", "-lcryptopp",
             ],
-            "cflags": [ "-std=c++11" ],
             'cflags!': [ '-fno-exceptions', '-fno-rtti' ],
             'cflags_cc!': [ '-fno-exceptions', '-fno-rtti' ]
         },

@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
-    "start": "node build/main.js",
-    "build-once": "babel src --out-dir build --source-maps --copy-files",
-    "build": "babel src --out-dir build --source-maps --copy-files --watch",
+    "start": "node target/main.js",
+    "build-once": "babel src --out-dir target --source-maps --copy-files",
+    "build": "babel src --out-dir target --source-maps --copy-files --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Niklas Salmoukas <niklas@salmoukas.com>",
