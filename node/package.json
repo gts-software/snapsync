@@ -2,8 +2,11 @@
   "name": "snapsync",
   "version": "1.0.0",
   "main": "./build/Release/snapsync",
+  "scripts": {
+    "install": "true",
+    "prepublish": "node-gyp rebuild"
+  },
   "dependencies": {
     "nan": "^2.3.5"
-  },
-  "gypfile": true
+  }
 }

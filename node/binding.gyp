@@ -26,6 +26,19 @@
             "cflags": [ "-std=c++11" ],
             'cflags!': [ '-fno-exceptions', '-fno-rtti' ],
             'cflags_cc!': [ '-fno-exceptions', '-fno-rtti' ]
+        },
+        {
+            "target_name": "snapsync_copy",
+            "type":"none",
+            "dependencies" : [ "snapsync" ],
+            "copies": [
+                {
+                    'destination': '<(module_root_dir)/target',
+                    'files': [
+                        '<(PRODUCT_DIR)/snapsync.node'
+                    ]
+                }
+            ]
         }
     ]
 }
