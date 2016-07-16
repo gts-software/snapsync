@@ -1,6 +1,7 @@
 var snapsync = require('../../node');
 var fs = require("fs");
 var path = require("path");
+var dircompare = require('dir-compare');
 
 var rmdir = function(dir) {
     var list = fs.readdirSync(dir);
@@ -56,3 +57,12 @@ snapsync.sync.patch('npp-6.9.1-2.patch', 'npp-6.9.1.img', 'npp-6.9.2.img-reconst
 
 console.log('extract target image...');
 snapsync.snap.extract('npp-6.9.2.img-reconstructed', 'npp-6.9.2-reconstructed');
+
+console.log('comparing target directory with reconstructed directory...');
+var res = dircompare.compareSync('npp-6.9.2', 'npp-6.9.2-reconstructed', {compareContent: true});
+console.log('equal: ' + res.equal);
+console.log('distinct: ' + res.distinct);
+console.log('left: ' + res.left);
+console.log('right: ' + res.right);
+console.log('differences: ' + res.differences);
+console.log('same: ' + res.same);
