@@ -4,7 +4,8 @@
   "main": "./target/snapsync",
   "scripts": {
     "install": "true",
-    "prepublish": "node-gyp rebuild"
+    "prepublish": "node-gyp rebuild",
+    "build": "node-gyp rebuild"
   },
   "dependencies": {
     "nan": "^2.3.5"

@@ -9,7 +9,7 @@ make
 # build node module
 cd "$ROOTDIR/node"
 npm install
-node-gyp rebuild
+npm run build
 
 # done
 cd "$ROOTDIR"
