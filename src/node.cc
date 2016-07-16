@@ -3,6 +3,7 @@
 #include <nan.h>
 #include "snap.hh"
 #include "sync.hh"
+#include <iostream>
 
 using namespace snapsync;
 
@@ -11,12 +12,14 @@ NAN_METHOD(snapCreate) {
     // get directory parameter
     if(info[0]->IsUndefined()) {
       Nan::ThrowError("directory not provided");
+      return;
     }
     boost::filesystem::path directory(*Nan::Utf8String(info[0]->ToString()));
 
     // get image parameter
     if(info[1]->IsUndefined()) {
       Nan::ThrowError("image not provided");
+      return;
     }
     boost::filesystem::path image(*Nan::Utf8String(info[1]->ToString()));
 
@@ -25,9 +28,11 @@ NAN_METHOD(snapCreate) {
   }
   catch(const std::exception& e) {
     Nan::ThrowError(e.what());
+    return;
   }
   catch(...) {
     Nan::ThrowError("an unknown error occured");
+    return;
   }
 }
 
@@ -36,12 +41,14 @@ NAN_METHOD(snapExtract) {
     // get image parameter
     if(info[0]->IsUndefined()) {
       Nan::ThrowError("image not provided");
+      return;
     }
     boost::filesystem::path image(*Nan::Utf8String(info[0]->ToString()));
 
     // get directory parameter
     if(info[1]->IsUndefined()) {
       Nan::ThrowError("directory not provided");
+      return;
     }
     boost::filesystem::path directory(*Nan::Utf8String(info[1]->ToString()));
 
@@ -50,9 +57,11 @@ NAN_METHOD(snapExtract) {
   }
   catch(const std::exception& e) {
     Nan::ThrowError(e.what());
+    return;
   }
   catch(...) {
     Nan::ThrowError("an unknown error occured");
+    return;
   }
 }
 
@@ -61,12 +70,14 @@ NAN_METHOD(syncSignature) {
     // get basePath parameter
     if(info[0]->IsUndefined()) {
       Nan::ThrowError("basePath not provided");
+      return;
     }
     boost::filesystem::path basePath(*Nan::Utf8String(info[0]->ToString()));
 
     // get signaturePath parameter
     if(info[1]->IsUndefined()) {
       Nan::ThrowError("signaturePath not provided");
+      return;
     }
     boost::filesystem::path signaturePath(*Nan::Utf8String(info[1]->ToString()));
 
@@ -87,9 +98,11 @@ NAN_METHOD(syncSignature) {
   }
   catch(const std::exception& e) {
     Nan::ThrowError(e.what());
+    return;
   }
   catch(...) {
     Nan::ThrowError("an unknown error occured");
+    return;
   }
 }
 
@@ -98,18 +111,21 @@ NAN_METHOD(syncDelta) {
     // get signaturePath parameter
     if(info[0]->IsUndefined()) {
       Nan::ThrowError("signaturePath not provided");
+      return;
     }
     boost::filesystem::path signaturePath(*Nan::Utf8String(info[0]->ToString()));
 
     // get targetPath parameter
     if(info[1]->IsUndefined()) {
       Nan::ThrowError("targetPath not provided");
+      return;
     }
     boost::filesystem::path targetPath(*Nan::Utf8String(info[1]->ToString()));
 
     // get patchPath parameter
     if(info[2]->IsUndefined()) {
       Nan::ThrowError("patchPath not provided");
+      return;
     }
     boost::filesystem::path patchPath(*Nan::Utf8String(info[2]->ToString()));
 
@@ -118,9 +134,11 @@ NAN_METHOD(syncDelta) {
   }
   catch(const std::exception& e) {
     Nan::ThrowError(e.what());
+    return;
   }
   catch(...) {
     Nan::ThrowError("an unknown error occured");
+    return;
   }
 }
 
@@ -129,18 +147,21 @@ NAN_METHOD(syncPatch) {
     // get patchPath parameter
     if(info[0]->IsUndefined()) {
       Nan::ThrowError("patchPath not provided");
+      return;
     }
     boost::filesystem::path patchPath(*Nan::Utf8String(info[0]->ToString()));
 
     // get basePath parameter
     if(info[1]->IsUndefined()) {
       Nan::ThrowError("basePath not provided");
+      return;
     }
     boost::filesystem::path basePath(*Nan::Utf8String(info[1]->ToString()));
 
     // get targetPath parameter
     if(info[2]->IsUndefined()) {
       Nan::ThrowError("targetPath not provided");
+      return;
     }
     boost::filesystem::path targetPath(*Nan::Utf8String(info[2]->ToString()));
 
@@ -149,9 +170,11 @@ NAN_METHOD(syncPatch) {
   }
   catch(const std::exception& e) {
     Nan::ThrowError(e.what());
+    return;
   }
   catch(...) {
     Nan::ThrowError("an unknown error occured");
+    return;
   }
 }
 
