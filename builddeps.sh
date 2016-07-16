@@ -11,8 +11,14 @@ make check
 
 # Build cryptopp
 cd "$ROOTDIR/cryptopp"
-make CXXFLAGS="-std=c++11 -fPIC"
-make test
+if [[ `uname -m` == arm* ]];
+then
+  make -f GNUmakefile-cross
+else
+  make CXXFLAGS="-std=c++11 -fPIC"
+  make test
+fi
+
 
 # Done
 cd "$ROOTDIR"
