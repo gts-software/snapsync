@@ -52,11 +52,13 @@ namespace snapsync { namespace snap {
       stream.exceptions(ofstream::failbit | ofstream::badbit | ofstream::eofbit);
 
       // copy file content
-      snap::copy_n(
-        istreambuf_iterator<char>(image),
-        static_cast<std::size_t>(filesize),
-        ostreambuf_iterator<char>(stream));
-      image.seekg(1, ios::cur);
+      if(filesize > 0) {
+        snap::copy_n(
+          istreambuf_iterator<char>(image),
+          static_cast<std::size_t>(filesize),
+          ostreambuf_iterator<char>(stream));
+        image.seekg(1, ios::cur);
+      }
 
       // flush and close
       stream.flush();
