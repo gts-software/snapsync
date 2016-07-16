@@ -1,7 +1,7 @@
 {
-  "name": "snapsync",
+  "name": "@process.team/snapsync",
   "version": "1.0.0",
-  "main": "./build/Release/snapsync",
+  "main": "./target/snapsync",
   "scripts": {
     "install": "true",
     "prepublish": "node-gyp rebuild"
