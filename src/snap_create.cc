@@ -4,6 +4,8 @@
 #include <vector>
 #include <fstream>
 #include <cryptopp/sha.h>
+#include <stdint.h>
+#include <algorithm>
 
 using namespace std;
 using namespace boost::filesystem;
@@ -19,7 +21,7 @@ namespace snapsync { namespace snap {
 
   template<>
   void write_value<std::string>(const std::string& content, std::ostream& image, CryptoPP::SHA1& hash) {
-    const std::uint64_t size = static_cast<std::uint64_t>(content.size());
+    const uint64_t size = static_cast<uint64_t>(content.size());
     write_value(size, image, hash);
     if(size > 0) {
       image.write(content.data(), size);
@@ -30,7 +32,7 @@ namespace snapsync { namespace snap {
   void write_file(boost::filesystem::path file, std::ofstream& image, CryptoPP::SHA1& hash) {
 
     // write file size
-    const std::uint64_t filesize = static_cast<std::uint64_t>(file_size(file));
+    const uint64_t filesize = static_cast<uint64_t>(file_size(file));
     write_value(filesize, image, hash);
 
     // open file
@@ -38,7 +40,7 @@ namespace snapsync { namespace snap {
     stream.exceptions(ifstream::failbit | ifstream::badbit | ifstream::eofbit);
 
     // read file
-    constexpr size_t CHUNKSIZE = 1024;
+    #define CHUNKSIZE (size_t)1024
     char chunk[CHUNKSIZE];
 
     for(
@@ -62,27 +64,27 @@ namespace snapsync { namespace snap {
     sort(children.begin(), children.end());
 
     // write size
-    std::uint64_t count = static_cast<std::uint64_t>(children.size());
+    uint64_t count = static_cast<uint64_t>(children.size());
     write_value(count, image, hash);
 
     // iterate children
-    for(auto child : children) {
+    for(vector<path>::iterator child = children.begin(); child != children.end(); ++child) {
 
       // write name
-      write_value(child.filename().string(), image, hash);
+      write_value(child->filename().string(), image, hash);
 
       // write type and content
-      if(is_directory(child)) {
+      if(is_directory(*child)) {
         write_value(NODE_DIRECTORY, image, hash);
-        write_directory(child, image, hash);
+        write_directory(*child, image, hash);
       }
       else
-      if(is_regular_file(child)) {
+      if(is_regular_file(*child)) {
         write_value(NODE_FILE, image, hash);
-        write_file(child, image, hash);
+        write_file(*child, image, hash);
       }
       else
-      if(exists(child)) {
+      if(exists(*child)) {
         write_value(NODE_UNKNOWN, image, hash);
       }
       else {
@@ -94,7 +96,7 @@ namespace snapsync { namespace snap {
   void create(boost::filesystem::path directory, std::ofstream& image) {
 
     // enable exceptions on image stream
-    auto oldExceptions = image.exceptions();
+    ios::iostate oldExceptions = image.exceptions();
     image.exceptions(ofstream::failbit | ofstream::badbit | ofstream::eofbit);
 
     // keep space for hash
@@ -109,7 +111,7 @@ namespace snapsync { namespace snap {
     hash.Final(digest);
 
     // write hash to file
-    auto oldpos = image.tellp();
+    ios::pos_type oldpos = image.tellp();
     image.seekp(0, ios::beg);
     image.write(reinterpret_cast<char*>(&digest[0]), CryptoPP::SHA1::DIGESTSIZE);
     image.seekp(oldpos, ios::beg);

@@ -10,18 +10,18 @@ namespace snapsync { namespace sync {
 
   void delta(std::istream& signature, std::istream& target, std::ostream& patch) {
 
-      constexpr size_t BUFFER_SIZE = 1024;
+      #define BUFFER_SIZE (size_t)1024
       char buffer_in[BUFFER_SIZE];
       char buffer_out[BUFFER_SIZE];
 
       // set exceptions flags
-      auto signatureOldExceptions = signature.exceptions();
+      ios::iostate signatureOldExceptions = signature.exceptions();
       signature.exceptions(istream::failbit | istream::badbit);
 
-      auto targetOldExceptions = target.exceptions();
+      ios::iostate targetOldExceptions = target.exceptions();
       target.exceptions(istream::failbit | istream::badbit);
 
-      auto patchOldExceptions = patch.exceptions();
+      ios::iostate patchOldExceptions = patch.exceptions();
       patch.exceptions(ostream::failbit | ostream::badbit);
 
       // read hashes
@@ -59,19 +59,19 @@ namespace snapsync { namespace sync {
       buffer.eof_in = 0;
 
       rs_signature_t *signatureSet = NULL;
-      auto job = rs_loadsig_begin(&signatureSet);
+      rs_job_t* job = rs_loadsig_begin(&signatureSet);
 
       while(true) {
 
         // fill input buffer
         if(!buffer.eof_in && (BUFFER_SIZE - buffer.avail_in) > 0) {
-          auto count = signature.rdbuf()->sgetn(buffer_in + buffer.avail_in, BUFFER_SIZE - buffer.avail_in);
+          size_t count = signature.rdbuf()->sgetn(buffer_in + buffer.avail_in, BUFFER_SIZE - buffer.avail_in);
           buffer.avail_in += count;
           buffer.eof_in = (count == 0);
         }
 
         // perform iteration
-        auto status = rs_job_iter(job, &buffer);
+        rs_result status = rs_job_iter(job, &buffer);
 
         if(status != RS_DONE && status != RS_BLOCKED) {
           throw std::runtime_error("could not read signature");
@@ -120,14 +120,14 @@ namespace snapsync { namespace sync {
 
         // fill input buffer
         if(!buffer.eof_in && (BUFFER_SIZE - buffer.avail_in) > 0) {
-          auto count = target.rdbuf()->sgetn(buffer_in + buffer.avail_in, BUFFER_SIZE - buffer.avail_in);
+          size_t count = target.rdbuf()->sgetn(buffer_in + buffer.avail_in, BUFFER_SIZE - buffer.avail_in);
           hashTarget.Update(reinterpret_cast<const byte*>(buffer_in + buffer.avail_in), count);
           buffer.avail_in += count;
           buffer.eof_in = (count == 0);
         }
 
         // perform iteration
-        auto status = rs_job_iter(job, &buffer);
+        rs_result status = rs_job_iter(job, &buffer);
 
         if(status != RS_DONE && status != RS_BLOCKED) {
           throw std::runtime_error("could not create patch");
@@ -165,7 +165,7 @@ namespace snapsync { namespace sync {
       hashTarget.Final(digestTarget);
 
       // write base hash to file and include it in patch hash
-      auto endpos = patch.tellp();
+      ios::pos_type endpos = patch.tellp();
       patch.seekp(CryptoPP::SHA1::DIGESTSIZE, ios::beg);
       patch.write(reinterpret_cast<const char*>(digestBase), CryptoPP::SHA1::DIGESTSIZE);
       hashPatch.Update(digestBase, CryptoPP::SHA1::DIGESTSIZE);

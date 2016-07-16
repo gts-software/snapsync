@@ -5,16 +5,16 @@ using namespace std;
 using namespace boost::filesystem;
 using namespace snapsync;
 
+void usage(char* path) {
+  std::cerr << "Usage: " << std::endl
+    << "1) " << path << " create <directory:in> <image:out>" << std::endl
+    << "2) " << path << " extract <image:in> <directory:out>" << std::endl;
+}
+
 int main(int argc, char** argv) {
 
-  auto usage = [&argv]{
-    std::cerr << "Usage: " << std::endl
-      << "1) " << argv[0] << " create <directory:in> <image:out>" << std::endl
-      << "2) " << argv[0] << " extract <image:in> <directory:out>" << std::endl;
-  };
-
   if(argc < 4) {
-    usage();
+    usage(argv[0]);
     return 1;
   }
 
@@ -30,7 +30,7 @@ int main(int argc, char** argv) {
       return 0;
     }
     else {
-      usage();
+      usage(argv[0]);
       return 1;
     }
   }

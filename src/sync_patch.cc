@@ -25,18 +25,18 @@ namespace snapsync { namespace sync {
 
   void patch(std::istream& patch, std::istream& base, std::ostream& target) {
 
-    constexpr size_t BUFFER_SIZE = 1024;
+    #define BUFFER_SIZE (size_t)1024
     char buffer_in[BUFFER_SIZE];
     char buffer_out[BUFFER_SIZE];
 
     // set exceptions flags
-    auto patchOldExceptions = patch.exceptions();
+    ios::iostate patchOldExceptions = patch.exceptions();
     patch.exceptions(istream::failbit | istream::badbit);
 
-    auto baseOldExceptions = base.exceptions();
+    ios::iostate baseOldExceptions = base.exceptions();
     base.exceptions(istream::failbit | istream::badbit);
 
-    auto targetOldExceptions = target.exceptions();
+    ios::iostate targetOldExceptions = target.exceptions();
     target.exceptions(ostream::failbit | ostream::badbit);
 
     // read hashes
@@ -97,19 +97,19 @@ namespace snapsync { namespace sync {
     CryptoPP::SHA1 hashTarget2;
 
     // run job
-    auto job = rs_patch_begin(read_base_callback, &base);
+    rs_job_t* job = rs_patch_begin(read_base_callback, &base);
 
     while(true) {
 
       // fill input buffer
       if(!buffer.eof_in && (BUFFER_SIZE - buffer.avail_in) > 0) {
-        auto count = patch.rdbuf()->sgetn(buffer_in + buffer.avail_in, BUFFER_SIZE - buffer.avail_in);
+        size_t count = patch.rdbuf()->sgetn(buffer_in + buffer.avail_in, BUFFER_SIZE - buffer.avail_in);
         buffer.avail_in += count;
         buffer.eof_in = (count == 0);
       }
 
       // perform iteration
-      auto status = rs_job_iter(job, &buffer);
+      rs_result status = rs_job_iter(job, &buffer);
 
       if(status != RS_DONE && status != RS_BLOCKED) {
         throw std::runtime_error("could not create target");

@@ -2,29 +2,10 @@
 
 namespace snapsync { namespace snap {
 
-  enum NODE_TYPE : std::uint8_t {
-    NODE_DIRECTORY,
-    NODE_FILE,
-    NODE_UNKNOWN,
-    NODE_NONE
-  };
+  #define NODE_DIRECTORY (uint8_t)0x1
+  #define NODE_FILE      (uint8_t)0x2
+  #define NODE_UNKNOWN   (uint8_t)0x3
+  #define NODE_NONE      (uint8_t)0x4
+
+  typedef uint8_t NODE_TYPE;
 } }
-
-namespace byteorder {
-
-    template<typename T>
-    T htobe(const T& value);
-
-    template<>
-    inline snapsync::snap::NODE_TYPE htobe<snapsync::snap::NODE_TYPE>(const snapsync::snap::NODE_TYPE& value) {
-      return value;
-    }
-
-    template<typename T>
-    T betoh(const T& value);
-
-    template<>
-    inline snapsync::snap::NODE_TYPE betoh<snapsync::snap::NODE_TYPE>(const snapsync::snap::NODE_TYPE& value) {
-      return value;
-    }
-}

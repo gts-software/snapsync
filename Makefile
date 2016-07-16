@@ -2,7 +2,7 @@ CC=gcc
 CXX=g++
 
 CFLAGS=-Wall -g
-CXXFLAGS=-Wall -g -std=c++11
+CXXFLAGS=-Wall -g
 
 CXXINCLUDES=-Ilibrsync/src -I.
 CXXLIBS=-lboost_system -lboost_filesystem -Llibrsync -lrsync -Lcryptopp -lcryptopp

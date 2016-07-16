@@ -5,17 +5,17 @@ using namespace std;
 using namespace boost::filesystem;
 using namespace snapsync;
 
+void usage(char* path) {
+  std::cerr << "Usage: " << std::endl
+    << "1) " << path << " signature <base:in> <signature:out> [block-length] [sum-length]" << std::endl
+    << "2) " << path << " delta <signature:in> <target:in> <patch:out>" << std::endl
+    << "3) " << path << " patch <patch:in> <base:in> <target:out>" << std::endl;
+}
+
 int main(int argc, char** argv) {
 
-  auto usage = [&argv]{
-    std::cerr << "Usage: " << std::endl
-      << "1) " << argv[0] << " signature <base:in> <signature:out> [block-length] [sum-length]" << std::endl
-      << "2) " << argv[0] << " delta <signature:in> <target:in> <patch:out>" << std::endl
-      << "3) " << argv[0] << " patch <patch:in> <base:in> <target:out>" << std::endl;
-  };
-
   if(argc < 2) {
-    usage();
+    usage(argv[0]);
     return 1;
   }
 
@@ -23,7 +23,7 @@ int main(int argc, char** argv) {
     std::string command = argv[1];
     if(command == "signature") {
       if(argc < 4) {
-        usage();
+        usage(argv[0]);
         return 1;
       }
       size_t blockLen = 0, sumLen = 0;
@@ -39,7 +39,7 @@ int main(int argc, char** argv) {
     else
     if(command == "delta") {
       if(argc < 5) {
-        usage();
+        usage(argv[0]);
         return 1;
       }
       sync::delta(path(argv[2]), path(argv[3]), path(argv[4]));
@@ -48,14 +48,14 @@ int main(int argc, char** argv) {
     else
     if(command == "patch") {
       if(argc < 5) {
-        usage();
+        usage(argv[0]);
         return 1;
       }
       sync::patch(path(argv[2]), path(argv[3]), path(argv[4]));
       return 0;
     }
     else {
-      usage();
+      usage(argv[0]);
       return 1;
     }
   }

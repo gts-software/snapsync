@@ -12,6 +12,18 @@ using namespace boost::filesystem;
 
 namespace snapsync { namespace snap {
 
+  template< class InputIt, class Size, class OutputIt>
+  OutputIt copy_n(InputIt first, Size count, OutputIt result)
+  {
+      if (count > 0) {
+          *result++ = *first;
+          for (Size i = 1; i < count; ++i) {
+              *result++ = *++first;
+          }
+      }
+      return result;
+  }
+
   template<typename T>
   void read_value(std::istream& image, T& value) {
     T source = T();
@@ -21,7 +33,7 @@ namespace snapsync { namespace snap {
 
   template<>
   void read_value<std::string>(std::istream& image, std::string& content) {
-    std::uint64_t size = 0;
+    uint64_t size = 0;
     read_value(image, size);
     content.resize(static_cast<std::size_t>(size), '\0');
     if(size > 0) {
@@ -32,7 +44,7 @@ namespace snapsync { namespace snap {
   void read_file(std::ifstream& image, boost::filesystem::path file) {
 
       // read file size
-      std::uint64_t filesize = 0;
+      uint64_t filesize = 0;
       read_value(image, filesize);
 
       // open file
@@ -40,7 +52,7 @@ namespace snapsync { namespace snap {
       stream.exceptions(ofstream::failbit | ofstream::badbit | ofstream::eofbit);
 
       // copy file content
-      std::copy_n(
+      copy_n(
         istreambuf_iterator<char>(image),
         static_cast<std::size_t>(filesize),
         ostreambuf_iterator<char>(stream));
@@ -57,7 +69,7 @@ namespace snapsync { namespace snap {
     create_directories(directory);
 
     // read children count
-    std::uint64_t size = 0;
+    uint64_t size = 0;
     read_value(image, size);
 
     // extract children
@@ -85,7 +97,7 @@ namespace snapsync { namespace snap {
   void extract(std::ifstream& image, boost::filesystem::path directory) {
 
     // enable exceptions on image stream
-    auto oldExceptions = image.exceptions();
+    ios::iostate oldExceptions = image.exceptions();
     image.exceptions(ifstream::failbit | ifstream::badbit | ifstream::eofbit);
 
     // read hash

@@ -1,4 +1,5 @@
 #include <endian.h>
+#include <stdint.h>
 
 namespace byteorder {
 
@@ -6,22 +7,22 @@ namespace byteorder {
     T htobe(const T& value);
 
     template<>
-    inline std::uint8_t htobe<std::uint8_t>(const std::uint8_t& value) {
+    inline uint8_t htobe<uint8_t>(const uint8_t& value) {
       return value;
     }
 
     template<>
-    inline std::uint16_t htobe<std::uint16_t>(const std::uint16_t& value) {
+    inline uint16_t htobe<uint16_t>(const uint16_t& value) {
       return htobe16(value);
     }
 
     template<>
-    inline std::uint32_t htobe<std::uint32_t>(const std::uint32_t& value) {
+    inline uint32_t htobe<uint32_t>(const uint32_t& value) {
       return htobe32(value);
     }
 
     template<>
-    inline std::uint64_t htobe<std::uint64_t>(const std::uint64_t& value) {
+    inline uint64_t htobe<uint64_t>(const uint64_t& value) {
       return htobe64(value);
     }
 
@@ -29,22 +30,22 @@ namespace byteorder {
     T betoh(const T& value);
 
     template<>
-    inline std::uint8_t betoh<std::uint8_t>(const std::uint8_t& value) {
+    inline uint8_t betoh<uint8_t>(const uint8_t& value) {
       return value;
     }
 
     template<>
-    inline std::uint16_t betoh<std::uint16_t>(const std::uint16_t& value) {
+    inline uint16_t betoh<uint16_t>(const uint16_t& value) {
       return be16toh(value);
     }
 
     template<>
-    inline std::uint32_t betoh<std::uint32_t>(const std::uint32_t& value) {
+    inline uint32_t betoh<uint32_t>(const uint32_t& value) {
       return be32toh(value);
     }
 
     template<>
-    inline std::uint64_t betoh<std::uint64_t>(const std::uint64_t& value) {
+    inline uint64_t betoh<uint64_t>(const uint64_t& value) {
       return be64toh(value);
     }
 }

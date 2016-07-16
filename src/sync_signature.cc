@@ -18,17 +18,17 @@ namespace snapsync { namespace sync {
     }
 
     // set exceptions flags
-    auto baseOldExceptions = base.exceptions();
+    ios::iostate baseOldExceptions = base.exceptions();
     base.exceptions(istream::failbit | istream::badbit);
 
-    auto signatureOldExceptions = signature.exceptions();
+    ios::iostate signatureOldExceptions = signature.exceptions();
     signature.exceptions(ostream::failbit | ostream::badbit);
 
     // keep space for hashes
     signature.seekp(CryptoPP::SHA1::DIGESTSIZE * 2, ios::cur);
 
     // read base and write signature
-    constexpr size_t BUFFER_SIZE = 1024;
+    #define BUFFER_SIZE (size_t)1024
     char buffer_in[BUFFER_SIZE];
     char buffer_out[BUFFER_SIZE];
 
@@ -43,20 +43,20 @@ namespace snapsync { namespace sync {
     CryptoPP::SHA1 hashSig;
 
     // run job
-    auto job = rs_sig_begin(blockLength, sumLength, RS_BLAKE2_SIG_MAGIC);
+    rs_job_t* job = rs_sig_begin(blockLength, sumLength, RS_BLAKE2_SIG_MAGIC);
 
     while(true) {
 
       // fill input buffer
       if(!buffer.eof_in && (BUFFER_SIZE - buffer.avail_in) > 0) {
-        auto count = base.rdbuf()->sgetn(buffer_in + buffer.avail_in, BUFFER_SIZE - buffer.avail_in);
+        size_t count = base.rdbuf()->sgetn(buffer_in + buffer.avail_in, BUFFER_SIZE - buffer.avail_in);
         hashBase.Update(reinterpret_cast<const byte*>(buffer_in + buffer.avail_in), count);
         buffer.avail_in += count;
         buffer.eof_in = (count == 0);
       }
 
       // perform iteration
-      auto status = rs_job_iter(job, &buffer);
+      rs_result status = rs_job_iter(job, &buffer);
 
       if(status != RS_DONE && status != RS_BLOCKED) {
         throw std::runtime_error("could not create signature");
@@ -91,7 +91,7 @@ namespace snapsync { namespace sync {
     hashBase.Final(digestBase);
 
     // write base hash to file and include it in signature hash
-    auto endpos = signature.tellp();
+    ios::pos_type endpos = signature.tellp();
     signature.seekp(CryptoPP::SHA1::DIGESTSIZE, ios::beg);
     signature.write(reinterpret_cast<const char*>(digestBase), CryptoPP::SHA1::DIGESTSIZE);
     hashSig.Update(digestBase, CryptoPP::SHA1::DIGESTSIZE);
