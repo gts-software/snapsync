@@ -1,3 +1,3 @@
-let snapsync = require('./');
+let snapsync = require('../');
 
 console.log(snapsync.snap.create());
