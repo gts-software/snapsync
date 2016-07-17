@@ -21,10 +21,6 @@
                 "../librsync/src",
                 "../"
             ],
-            'conditions': [
-                [ 'arch=="arm"', {
-                    'libraries': [ "-static-libgcc", "-Wl,-static" ] } ]
-            ],
             "libraries": [
                 "-Wl,-rpath='$$ORIGIN'",
                 "-lboost_system", "-lboost_filesystem",
@@ -49,6 +45,11 @@
                             'files': [
                                 '<!@(ls -1 /usr/lib/x86_64-linux-gnu/libboost_system*.so*)',
                                 '<!@(ls -1 /usr/lib/x86_64-linux-gnu/libboost_filesystem*.so*)',
+                            ] } ],
+                        [ 'arch=="arm"', {
+                            'files': [
+                                '<!@(ls -1 /usr/lib/libboost_system*.so*)',
+                                '<!@(ls -1 /usr/lib/libboost_filesystem*.so*)',
                             ] } ]
                     ],
                 }
