@@ -5,7 +5,7 @@ CFLAGS=-Wall -g
 CXXFLAGS=-Wall -g
 
 CXXINCLUDES=-Ilibrsync/src -I.
-CXXLIBS=-lboost_system -lboost_filesystem -Llibrsync -lrsync -Lcryptopp -lcryptopp
+CXXLIBS=-static-libgcc -Wl,-static -lboost_system -lboost_filesystem -Llibrsync -lrsync -Lcryptopp -lcryptopp
 CXXOBJECTS := $(patsubst src/%.cc,build/%.obj,$(filter-out %_main.cc,$(wildcard src/*.cc)))
 
 all: build/snap build/sync

@@ -1,4 +1,7 @@
 {
+    'variables' : {
+        'arch': "<!(node -e \"console.log(process.arch)\")",
+    },
     "targets": [
         {
             "target_name": "snapsync",
@@ -18,7 +21,12 @@
                 "../librsync/src",
                 "../"
             ],
+            'conditions': [
+                [ 'arch=="arm"', {
+                    'libraries': [ "-static-libgcc", "-Wl,-static" ] } ]
+            ],
             "libraries": [
+                "-Wl,-rpath='$$ORIGIN'",
                 "-lboost_system", "-lboost_filesystem",
                 "-L../../librsync", "-lrsync",
                 "-L../../cryptopp", "-lcryptopp",
@@ -35,7 +43,14 @@
                     'destination': '<(module_root_dir)/target',
                     'files': [
                         '<(PRODUCT_DIR)/snapsync.node'
-                    ]
+                    ],
+                    'conditions': [
+                        [ 'arch=="x64"', {
+                            'files': [
+                                '<!@(ls -1 /usr/lib/x86_64-linux-gnu/libboost_system*.so*)',
+                                '<!@(ls -1 /usr/lib/x86_64-linux-gnu/libboost_filesystem*.so*)',
+                            ] } ]
+                    ],
                 }
             ]
         }
