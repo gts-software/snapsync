@@ -1,6 +1,6 @@
 {
   "name": "@process.team/snapsync",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "./target/snapsync",
   "scripts": {
     "install": "true",
