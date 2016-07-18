@@ -70,21 +70,35 @@ namespace snapsync { namespace snap {
     // iterate children
     for(vector<path>::iterator child = children.begin(); child != children.end(); ++child) {
 
+      // get status
+      file_status stat = symlink_status(*child);
+
       // write name
       write_value(child->filename().string(), image, hash);
 
+      // write permissions
+      perms pmask = stat.permissions();
+      cout << hex << "0x" << pmask << endl;
+      write_value(static_cast<uint16_t>(pmask), image, hash);
+
       // write type and content
-      if(is_directory(*child)) {
+      if(is_directory(stat)) {
         write_value(NODE_DIRECTORY, image, hash);
         write_directory(*child, image, hash);
       }
       else
-      if(is_regular_file(*child)) {
+      if(is_regular_file(stat)) {
         write_value(NODE_FILE, image, hash);
         write_file(*child, image, hash);
       }
       else
-      if(exists(*child)) {
+      if(is_symlink(stat)) {
+        write_value(NODE_SYMLINK, image, hash);
+        path to = read_symlink(*child);
+        write_value(to.generic_string(), image, hash);
+      }
+      else
+      if(exists(stat)) {
         write_value(NODE_UNKNOWN, image, hash);
       }
       else {

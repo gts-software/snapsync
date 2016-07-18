@@ -81,6 +81,11 @@ namespace snapsync { namespace snap {
       std::string name;
       read_value(image, name);
 
+      // extract permission mask
+      uint16_t pmask;
+      read_value(image, pmask);
+      cout << hex << "0x" << static_cast<perms>(pmask) << endl;
+
       // extract type
       NODE_TYPE type = NODE_UNKNOWN;
       read_value(image, type);
@@ -93,6 +98,22 @@ namespace snapsync { namespace snap {
       if(type == NODE_FILE) {
         read_file(image, directory / name);
       }
+      else
+      if(type == NODE_SYMLINK) {
+        std::string to;
+        read_value(image, to);
+        create_symlink(path(to), directory / name);
+      }
+      else
+      if(type == NODE_UNKNOWN || type == NODE_NONE) {
+        // skip
+      }
+      else {
+        throw std::runtime_error("invalid node type");
+      }
+
+      // apply permissions
+      permissions(directory / name, static_cast<perms>(pmask));
     }
   }
 
