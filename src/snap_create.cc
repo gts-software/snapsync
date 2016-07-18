@@ -78,7 +78,6 @@ namespace snapsync { namespace snap {
 
       // write permissions
       perms pmask = stat.permissions();
-      cout << hex << "0x" << pmask << endl;
       write_value(static_cast<uint16_t>(pmask), image, hash);
 
       // write type and content
@@ -99,7 +98,7 @@ namespace snapsync { namespace snap {
       }
       else
       if(exists(stat)) {
-        write_value(NODE_UNKNOWN, image, hash);
+        throw new std::runtime_error("cannot handle node type");
       }
       else {
         write_value(NODE_NONE, image, hash);
