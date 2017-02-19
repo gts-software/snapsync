@@ -1,11 +1,11 @@
 {
   "name": "snapsync",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "./index.js",
   "author" : "Niklas Salmoukas <niklas@salmoukas.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/process-team/snapsync.git"
+    "url": "git+https://github.com/core-process/snapsync.git"
   },
   "binary": {
       "module_name" : "snapsync",
