@@ -46,7 +46,7 @@ snapsync.sync.patch('bin-v1v2.patch', 'bin-v1', 'bin-v2');
 
 ### Packing and Unpacking Directory Structures
 
-The archive format provided by the `justsnap` tool is optimized for the signature, delta and patch cycle provided by `justsync`. It works with recursive directory structures and stores filenames, access bitmasks and content of files. Additionally it sorts directories while creating the image file to avoid unnecessary deltas during the synchronization phase.
+The archive format provided by the `snapsync.snap` tool is optimized for the signature, delta and patch cycle provided by `snapsync.sync`. It works with recursive directory structures and stores filenames, access bitmasks and content of files. Additionally it sorts directories while creating the image file to avoid unnecessary deltas during the synchronization phase.
 
 ```js
 var snapsync = require('snapsync');
