@@ -1,3 +1,4 @@
-/build
-/node_modules
-/target
+lib/binding
+npm-debug.log
+node_modules
+build

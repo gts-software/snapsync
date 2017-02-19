@@ -1,13 +1,33 @@
 {
   "name": "snapsync",
   "version": "1.0.4",
-  "main": "./target/snapsync",
-  "scripts": {
-    "install": "true",
-    "prepublish": "node-gyp rebuild",
-    "build": "node-gyp rebuild"
+  "main": "./index.js",
+  "author" : "Niklas Salmoukas <niklas@salmoukas.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/process-team/snapsync.git"
   },
-  "dependencies": {
-    "nan": "^2.3.5"
+  "binary": {
+      "module_name" : "snapsync",
+      "module_path" : "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
+      "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
+      "host":         "https://github.com/core-process/snapsync/releases/download/",
+      "remote_path":  "{version}"
+  },
+  "dependencies"  : {
+    "nan": "^2.5.1",
+    "node-pre-gyp": "^0.6.33",
+    "node-pre-gyp-github": "^1.3.1"
+  },
+  "scripts": {
+    "preinstall" :   "npm install node-pre-gyp",
+    "install" :      "node-pre-gyp install --fallback-to-build",
+    "test":          "node index.js",
+    "prepublish":    "npm ls",
+    "dev-configure": "node-pre-gyp configure",
+    "dev-build":     "node-pre-gyp build",
+    "dev-package":   "node-pre-gyp package",
+    "dev-publish":   "node-pre-gyp-github publish --release",
+    "dev-all":       "npm run dev-configure && npm run dev-build && npm run dev-package && npm run dev-publish"
   }
 }

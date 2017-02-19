@@ -1,3 +1,6 @@
-/build
-/node_modules
-/binding.gyp
+node_modules
+lib/binding
+build
+npm-debug.log
+.npmignore
+.gitignore

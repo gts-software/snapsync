@@ -4,7 +4,7 @@
     },
     "targets": [
         {
-            "target_name": "snapsync",
+            "target_name": "<(module_name)",
             "defines": [
                 "BUILD_NODE_MODULE",
             ],
@@ -31,14 +31,14 @@
             'cflags_cc!': [ '-fno-exceptions', '-fno-rtti' ]
         },
         {
-            "target_name": "snapsync_copy",
+            "target_name": "action_after_build",
             "type":"none",
-            "dependencies" : [ "snapsync" ],
+            "dependencies" : [ "<(module_name)" ],
             "copies": [
                 {
-                    'destination': '<(module_root_dir)/target',
+                    'destination': '<(module_path)',
                     'files': [
-                        '<(PRODUCT_DIR)/snapsync.node'
+                        '<(PRODUCT_DIR)/<(module_name).node'
                     ],
                     'conditions': [
                         [ 'arch=="x64"', {
