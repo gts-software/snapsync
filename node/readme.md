@@ -4,6 +4,8 @@ An excellent library and toolset for optimized transfers of single files and dir
 
 ![npm downloads total](https://img.shields.io/npm/dt/snapsync.svg) ![npm version](https://img.shields.io/npm/v/snapsync.svg) ![npm license](https://img.shields.io/npm/l/snapsync.svg)
 
+librsync helps with efficient calculation of the differences between two files. The rsync algorithm is different from most differencing algorithms because it does not require the presence of the two files to calculate the delta. Instead, it requires a set of checksums of each block of one file, which together form a signature for that file. Blocks at any in the other file which have the same checksum are likely to be identical, and whatever remains is the difference.
+
 ## Installation
 
 Install the `snapsync` module via
@@ -17,6 +19,8 @@ or
 ```sh
 yarn add snapsync
 ```
+
+This npm-library provides prebuilt binaries for a specific set of platforms with the help of [node-pre-gyp](https://www.npmjs.com/package/node-pre-gyp) and [node-pre-gyp-github](https://www.npmjs.com/package/node-pre-gyp-github). In case there are no prebuilt binaries for your platform, the installation procedure tries to fall back to building the library from sourcecode. Building from sourcecode requires further dependencies which cannot be provided via NPM, therefore building from sourcecode will fail in this context. If you want to build the module for you architecture, please follow [these instructions](https://github.com/core-process/snapsync).
 
 ## Usage
 
