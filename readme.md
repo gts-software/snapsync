@@ -32,7 +32,7 @@ The native tools `justsnap` and `justsync` are placed in the `build` directory.
 
 ### Synchronize Files
 
-*Scenario:* You have to devices (A and B) which store a version of a specific file and you want to update the version on device B to the version provided on device A.
+*Scenario:* You have two devices (A and B) each storing a different version of a particular file, and you want to update the version on device B to the version provided in device A.
 
 ```sh
 # Usage:
