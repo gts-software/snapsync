@@ -2,7 +2,7 @@
 
 An excellent library and toolset for optimized transfers of single files and directory snapshots based on librsync.
 
-Please have a look at the [snapsync](https://github.com/core-process/snapsync/tree/master/node) npm-module in case you want to use the library together with NodeJS. In that case, you do not have to build the library manually as we provide prebuilt binaries for a selected set of architectures.
+Please have a look at the [npm-module](https://github.com/core-process/snapsync/tree/master/node) in case you want to use the library together with NodeJS. In that case, you do not have to build the library manually as we provide prebuilt binaries for a selected set of architectures.
 
 ## Setup
 
