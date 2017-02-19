@@ -8,13 +8,13 @@ CXXINCLUDES=-Ilibrsync/src -I.
 CXXLIBS=-static-libgcc -Wl,-static -lboost_system -lboost_filesystem -Llibrsync -lrsync -Lcryptopp -lcryptopp
 CXXOBJECTS := $(patsubst src/%.cc,build/%.obj,$(filter-out %_main.cc,$(wildcard src/*.cc)))
 
-all: build/snap build/sync
+all: build/justsnap build/justsync
 
-build/snap: $(CXXOBJECTS) build/snap_main.obj
+build/justsnap: $(CXXOBJECTS) build/snap_main.obj
 	@mkdir -p build
 	$(CXX) $(CXXFLAGS) -o $@ $^ $(CXXLIBS)
 
-build/sync: $(CXXOBJECTS) build/sync_main.obj
+build/justsync: $(CXXOBJECTS) build/sync_main.obj
 	@mkdir -p build
 	$(CXX) $(CXXFLAGS) -o $@ $^ $(CXXLIBS)
 

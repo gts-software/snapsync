@@ -1,7 +1,7 @@
 {
   "name": "snapsync",
   "version": "1.0.6",
-  "description": "An excellent library for optimized transfers of single files and directory snapshots based on librsync.",
+  "description": "An excellent library and toolset for optimized transfers of single files and directory snapshots based on librsync.",
   "main": "./index.js",
   "author" : "Niklas Salmoukas <niklas@salmoukas.com>",
   "license": "MIT",

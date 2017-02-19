@@ -9,7 +9,6 @@ make
 # build node module
 cd "$ROOTDIR/node"
 npm install
-npm run build
 
 # done
 cd "$ROOTDIR"
