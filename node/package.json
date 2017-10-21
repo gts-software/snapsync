@@ -25,7 +25,6 @@
     "preinstall": "npm install node-pre-gyp",
     "install": "node-pre-gyp install --fallback-to-build",
     "test": "node index.js",
-    "prepublish": "npm ls",
     "dev-configure": "node-pre-gyp configure",
     "dev-build": "node-pre-gyp build",
     "dev-package": "node-pre-gyp package",
