@@ -43,8 +43,8 @@
                     'conditions': [
                         [ 'arch=="x64"', {
                             'files': [
-                                '<!@(ls -1 /usr/lib/x86_64-linux-gnu/libboost_system*.so*)',
-                                '<!@(ls -1 /usr/lib/x86_64-linux-gnu/libboost_filesystem*.so*)',
+                                '<!@(ls -1 /usr/lib/libboost_system*.so*)',
+                                '<!@(ls -1 /usr/lib/libboost_filesystem*.so*)',
                             ] } ],
                         [ 'arch=="arm"', {
                             'files': [
