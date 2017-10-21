@@ -25,7 +25,7 @@ cd snapsync
 make
 
 # in case you want to build the NodeJS library too, simply run
-./build.sh
+./buildlibs.sh
 ```
 
 The native tools `justsnap` and `justsync` are placed in the `build` directory.

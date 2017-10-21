@@ -3,6 +3,10 @@
 set -e
 ROOTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# initiate build container
+# build program and library
 cd "$ROOTDIR"
-docker build -f build.dockerfile .
+make
+
+# build node module
+cd "$ROOTDIR/node"
+npm install

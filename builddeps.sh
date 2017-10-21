@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-ROOTDIR=`pwd`
+ROOTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Build librsync
 cd "$ROOTDIR/librsync"
@@ -19,6 +19,3 @@ else
   make CXXFLAGS="-fPIC"
   make test
 fi
-
-# Done
-cd "$ROOTDIR"
