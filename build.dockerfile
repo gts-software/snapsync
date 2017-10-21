@@ -2,7 +2,7 @@
 FROM node:8-alpine as build
 
 # install required build tools and libraries
-RUN apk add --no-cache make gcc g++ boost boost-dev
+RUN apk add --no-cache bash make cmake gcc g++ boost boost-dev perl
 
 # prepare working directory
 RUN mkdir -p /build

@@ -48,8 +48,8 @@ namespace snapsync { namespace snap {
       read_value(image, filesize);
 
       // open file
-      ofstream stream(file.string().c_str(), ios::binary | ios::trunc | ios::out);
-      stream.exceptions(ofstream::failbit | ofstream::badbit | ofstream::eofbit);
+      std::ofstream stream(file.string().c_str(), ios::binary | ios::trunc | ios::out);
+      stream.exceptions(std::ofstream::failbit | std::ofstream::badbit | std::ofstream::eofbit);
 
       // copy file content
       if(filesize > 0) {
@@ -119,7 +119,7 @@ namespace snapsync { namespace snap {
 
     // enable exceptions on image stream
     ios::iostate oldExceptions = image.exceptions();
-    image.exceptions(ifstream::failbit | ifstream::badbit | ifstream::eofbit);
+    image.exceptions(std::ifstream::failbit | std::ifstream::badbit | std::ifstream::eofbit);
 
     // read hash
     byte digest1[CryptoPP::SHA1::DIGESTSIZE];
@@ -129,7 +129,7 @@ namespace snapsync { namespace snap {
     CryptoPP::SHA1 hash;
     byte digest2[CryptoPP::SHA1::DIGESTSIZE];
 
-    image.exceptions(ifstream::goodbit);
+    image.exceptions(std::ifstream::goodbit);
 
     CryptoPP::FileSource fs(image, true,
         new CryptoPP::HashFilter(hash,
@@ -139,7 +139,7 @@ namespace snapsync { namespace snap {
 
     image.clear();
     image.seekg(CryptoPP::SHA1::DIGESTSIZE, ios::beg);
-    image.exceptions(ifstream::failbit | ifstream::badbit | ifstream::eofbit);
+    image.exceptions(std::ifstream::failbit | std::ifstream::badbit | std::ifstream::eofbit);
 
     // compare hashes
     if(memcmp(digest1, digest2, CryptoPP::SHA1::DIGESTSIZE) != 0) {
@@ -156,7 +156,7 @@ namespace snapsync { namespace snap {
   void extract(boost::filesystem::path image, boost::filesystem::path directory) {
 
       // open file
-      ifstream stream(image.string().c_str(), ios::binary | ios::in);
+      std::ifstream stream(image.string().c_str(), ios::binary | ios::in);
 
       // extract image
       extract(stream, directory);

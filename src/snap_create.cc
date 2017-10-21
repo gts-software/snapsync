@@ -36,8 +36,8 @@ namespace snapsync { namespace snap {
     write_value(filesize, image, hash);
 
     // open file
-    ifstream stream(file.string().c_str(), ios::binary | ios::in);
-    stream.exceptions(ifstream::failbit | ifstream::badbit | ifstream::eofbit);
+    std::ifstream stream(file.string().c_str(), ios::binary | ios::in);
+    stream.exceptions(std::ifstream::failbit | std::ifstream::badbit | std::ifstream::eofbit);
 
     // read file
     #define CHUNKSIZE (size_t)1024
@@ -110,7 +110,7 @@ namespace snapsync { namespace snap {
 
     // enable exceptions on image stream
     ios::iostate oldExceptions = image.exceptions();
-    image.exceptions(ofstream::failbit | ofstream::badbit | ofstream::eofbit);
+    image.exceptions(std::ofstream::failbit | std::ofstream::badbit | std::ofstream::eofbit);
 
     // keep space for hash
     image.seekp(CryptoPP::SHA1::DIGESTSIZE, ios::cur);
@@ -137,7 +137,7 @@ namespace snapsync { namespace snap {
   void create(boost::filesystem::path directory, boost::filesystem::path image) {
 
       // open file
-      ofstream stream(image.string().c_str(), ios::binary | ios::trunc | ios::out);
+      std::ofstream stream(image.string().c_str(), ios::binary | ios::trunc | ios::out);
 
       // create image
       create(directory, stream);
