@@ -11,8 +11,8 @@
   },
   "binary": {
     "module_name": "snapsync",
-    "module_path": "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
-    "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
+    "module_path": "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}-{libc}/",
+    "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}-{libc}.tar.gz",
     "host": "https://github.com/core-process/snapsync/releases/download/",
     "remote_path": "{version}"
   },
