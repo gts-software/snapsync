@@ -11,7 +11,7 @@
   },
   "binary": {
     "module_name": "snapsync",
-    "module_path": "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}-{libc}/",
+    "module_path": "./lib/binding/{node_abi}-{platform}-{arch}-{libc}/",
     "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}-{libc}.tar.gz",
     "host": "https://github.com/core-process/snapsync/releases/download/",
     "remote_path": "{version}"
@@ -21,14 +21,14 @@
     "node-pre-gyp": "^0.6.39",
     "node-pre-gyp-github": "^1.3.1"
   },
+  "bundledDependencies": [
+    "node-pre-gyp",
+    "node-pre-gyp-github"
+  ],
   "scripts": {
-    "preinstall": "npm install node-pre-gyp",
-    "install": "node-pre-gyp install --fallback-to-build",
-    "test": "node index.js",
-    "dev-configure": "node-pre-gyp configure",
-    "dev-build": "node-pre-gyp build",
-    "dev-package": "node-pre-gyp package",
-    "dev-publish": "node-pre-gyp-github publish --release",
-    "dev-all": "npm run dev-configure && npm run dev-build && npm run dev-package && npm run dev-publish"
+    "install": "node-pre-gyp install",
+    "prepublishOnly": "npm ls",
+    "prebuild": "node-pre-gyp configure build package",
+    "prebuild-publish": "node-pre-gyp-github publish --release"
   }
 }

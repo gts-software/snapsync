@@ -18,14 +18,8 @@ sudo apt-get install libboost1.58-all-dev
 git clone --recursive https://github.com/core-process/snapsync.git
 cd snapsync
 
-# build dependencies
-./builddeps.sh
-
-# build library and tools
-make
-
-# in case you want to build the NodeJS library too, simply run
-./buildlibs.sh
+# build dependencies, libraries and tools
+./build.sh
 ```
 
 The native tools `justsnap` and `justsync` are placed in the `build` directory.

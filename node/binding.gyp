@@ -28,7 +28,7 @@
                 "-L../../cryptopp", "-lcryptopp",
             ],
             'cflags!': [ '-fno-exceptions', '-fno-rtti' ],
-            'cflags_cc!': [ '-fno-exceptions', '-fno-rtti' ]
+            'cflags_cc!': [ '-fno-exceptions', '-fno-rtti' ],
         },
         {
             "target_name": "action_after_build",
@@ -38,20 +38,10 @@
                 {
                     'destination': '<(module_path)',
                     'files': [
-                        '<(PRODUCT_DIR)/<(module_name).node'
-                    ],
-                    'conditions': [
-                        [ 'arch=="x64"', {
-                            'files': [
-                                '<!@(ls -1 /usr/lib/libboost_system*.so*)',
-                                '<!@(ls -1 /usr/lib/libboost_filesystem*.so*)',
-                            ] } ],
-                        [ 'arch=="arm"', {
-                            'files': [
-                                '<!@(ls -1 /usr/lib/libboost_system*.so*)',
-                                '<!@(ls -1 /usr/lib/libboost_filesystem*.so*)',
-                            ] } ]
-                    ],
+                        '<(PRODUCT_DIR)/<(module_name).node',
+                        '<!@(ls -1 /usr/lib/libboost_system*.so*)',
+                        '<!@(ls -1 /usr/lib/libboost_filesystem*.so*)',
+                    ]
                 }
             ]
         }
