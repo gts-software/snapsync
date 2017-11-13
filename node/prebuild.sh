@@ -4,7 +4,7 @@ set -e
 ROOTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/.."
 
 # verify we have NODE_PRE_GYP_GITHUB_TOKEN
-if [ -n "$NODE_PRE_GYP_GITHUB_TOKEN" ];
+if [ -z "$NODE_PRE_GYP_GITHUB_TOKEN" ];
 then
   echo "Please set NODE_PRE_GYP_GITHUB_TOKEN!"
   echo "See https://www.npmjs.com/package/node-pre-gyp-github for more."
