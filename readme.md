@@ -11,8 +11,8 @@ Please have a look at the [npm-module](https://github.com/core-process/snapsync/
 Please follow the instructions below to build the `snapsync` tools for further use.
 
 ```sh
-# install a recent version of boost and its header files
-sudo apt-get install libboost1.58-all-dev
+# install cmake and a recent version of boost and its header files
+sudo apt-get install cmake libboost-all-dev
 
 # clone repository
 git clone --recursive https://github.com/core-process/snapsync.git

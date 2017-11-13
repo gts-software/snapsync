@@ -5,7 +5,7 @@ CFLAGS=-Wall -g
 CXXFLAGS=-Wall -g
 
 CXXINCLUDES=-Ilibrsync/src -I.
-CXXLIBS=-static-libgcc -Wl,-static -lboost_system -lboost_filesystem -Llibrsync -lrsync -Lcryptopp -lcryptopp
+CXXLIBS=-lboost_system -lboost_filesystem -Llibrsync -lrsync -Lcryptopp -lcryptopp
 CXXOBJECTS := $(patsubst src/%.cc,build/%.obj,$(filter-out %_main.cc,$(wildcard src/*.cc)))
 
 all: build/justsnap build/justsync
@@ -18,7 +18,7 @@ build/justsync: $(CXXOBJECTS) build/sync_main.obj
 	@mkdir -p build
 	$(CXX) $(CXXFLAGS) -o $@ $^ $(CXXLIBS)
 
-build/%.obj: src/%.cc
+build/%.obj: src/%.cc Makefile
 	@mkdir -p build
 	$(CXX) $(CXXFLAGS) -MD -MF $(patsubst %.obj,%.deps,$@) $(CXXINCLUDES) -c -o $@ $<
 
