@@ -39,8 +39,9 @@
                     'destination': '<(module_path)',
                     'files': [
                         '<(PRODUCT_DIR)/<(module_name).node',
-                        '<!@(ls -1 /usr/lib/libboost_system*.so*)',
-                        '<!@(ls -1 /usr/lib/libboost_filesystem*.so*)',
+                        '<!@(./liblookup.sh ../build/justsnap libstdc++)',
+                        '<!@(./liblookup.sh ../build/justsnap libboost_system)',
+                        '<!@(./liblookup.sh ../build/justsnap libboost_filesystem)',
                     ]
                 }
             ]
