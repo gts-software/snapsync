@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 BINARY="$1"
 LIBRARY="$2"
