@@ -18,6 +18,18 @@ then
   IN_CONTAINER=true
 fi
 
+array_contains () {
+  local seeking=$1; shift
+  local in=1
+  for element; do
+    if [[ $element == $seeking ]]; then
+      in=0
+      break
+    fi
+  done
+  return $in
+}
+
 # prebuild process
 if [ "$IN_CONTAINER" != "true" ];
 then
@@ -31,7 +43,7 @@ then
     TARGET_NAME=`basename "$DOCKERFILE" .dockerfile`
 
     # check if user want to build some specific image
-    if [ -n "$1" ] && [ "$1" != "$TARGET_NAME" ];
+    if [ "$#" -ne 0 ] && ! array_contains "$TARGET_NAME" "$@";
     then
       continue
     fi
