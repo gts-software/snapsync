@@ -27,12 +27,19 @@ then
 
   for DOCKERFILE in ./node/targets/*.dockerfile;
   do
+    # derive target name
+    TARGET_NAME=`basename "$DOCKERFILE" .dockerfile`
+
+    # check if user want to build some specific image
+    if [ -n "$1" ] && [ "$1" != "$TARGET_NAME" ];
+    then
+      continue
+    fi
+
+    # print header
     echo "################################################################################"
     echo "Building with $DOCKERFILE"
     echo "################################################################################"
-
-    # derive target name
-    TARGET_NAME=`basename "$DOCKERFILE" .dockerfile`
 
     # build container
     docker build -f "$DOCKERFILE" -t "snapsync-node-build-target:$TARGET_NAME" .
