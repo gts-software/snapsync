@@ -274,7 +274,7 @@ NAN_METHOD(syncSignature) {
 		if(info[4]->IsFunction()) {
 			cb = new Nan::Callback(info[4].As<v8::Function>());
 		} else {
-			return Nan::ThrowError(Nan::New("argument 4 must be a function").ToLocalChecked());
+			return Nan::ThrowError(Nan::New("argument 5 must be a function").ToLocalChecked());
 		}
 	} else {
 		return Nan::ThrowError(Nan::New("invalid parameters").ToLocalChecked()); // should never be reached
