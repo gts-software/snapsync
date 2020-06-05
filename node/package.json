@@ -1,6 +1,6 @@
 {
   "name": "gts-snapsync",
-  "version": "1.1.4",
+  "version": "1.1.6",
   "description": "An excellent library and toolset for optimized transfers of single files and directory snapshots based on librsync.",
   "main": "./index.js",
   "author": "Niklas Salmoukas <niklas@salmoukas.com>",
@@ -11,8 +11,8 @@
   },
   "binary": {
     "module_name": "gts-snapsync",
-    "module_path": "./lib/binding/{platform}-{arch}-{libc}/",
-    "package_name": "{module_name}-v{version}-{platform}-{arch}-{libc}.tar.gz",
+    "module_path": "./lib/binding/{node_abi}-{platform}-{arch}-{libc}/",
+    "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}-{libc}.tar.gz",
     "host": "https://github.com/gts-software/snapsync/releases/download/",
     "remote_path": "{version}"
   },

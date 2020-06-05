@@ -1,4 +1,4 @@
-# snapsync
+# gts-snapsync
 
 An excellent library and toolset for optimized transfers of single files and directory snapshots based on librsync.
 
@@ -29,6 +29,8 @@ snapsync.snap.create('dir', 'file');
 Async:
 ```js
 snapsync.snap.create('dir', 'file', (error) => {
-if (error) { console.log(error) }
+	if (error) { console.log(error) }
 });
+// or 
+await snapsync.snap.asyncCreate('dir','file');
 ```
