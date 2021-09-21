@@ -1,0 +1,74 @@
+{
+  "_from": "node-pre-gyp-github@^1.4.3",
+  "_id": "node-pre-gyp-github@1.4.3",
+  "_inBundle": false,
+  "_integrity": "sha512-tnJ0iZgzIZnZl7VBgebPYdzOe98dxMnQeDs6+yX1WVdt6IiWu0l4EYes3IY7ZIokRbtJ4iJjqwgGIyQrdfDJSg==",
+  "_location": "/node-pre-gyp-github",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "node-pre-gyp-github@^1.4.3",
+    "name": "node-pre-gyp-github",
+    "escapedName": "node-pre-gyp-github",
+    "rawSpec": "^1.4.3",
+    "saveSpec": null,
+    "fetchSpec": "^1.4.3"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/node-pre-gyp-github/-/node-pre-gyp-github-1.4.3.tgz",
+  "_shasum": "5619999843216df6870cb2daba46c138258068c5",
+  "_spec": "node-pre-gyp-github@^1.4.3",
+  "_where": "/workspace/node",
+  "author": {
+    "name": "Bill Christo"
+  },
+  "bin": {
+    "node-pre-gyp-github": "bin/node-pre-gyp-github.js"
+  },
+  "bugs": {
+    "url": "https://github.com/bchr02/node-pre-gyp-github/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "@octokit/rest": "^15.9.5",
+    "commander": "^2.17.0",
+    "mime-types": "^2.1.19"
+  },
+  "deprecated": false,
+  "description": "A node-pre-gyp module which provides the ability to publish to GitHub releases.",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "coveralls": "^3.0.2",
+    "mocha": "^5.2.0",
+    "nyc": "^12.0.2",
+    "sinon": "^6.1.4"
+  },
+  "homepage": "https://github.com/bchr02/node-pre-gyp-github#readme",
+  "keywords": [
+    "node-pre-gyp",
+    "binary",
+    "bindings",
+    "c++",
+    "c",
+    "native",
+    "addon",
+    "module",
+    "github",
+    "releases"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "node-pre-gyp-github",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bchr02/node-pre-gyp-github.git"
+  },
+  "scripts": {
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "test": "nyc --reporter=html --reporter=text mocha"
+  },
+  "version": "1.4.3"
+}

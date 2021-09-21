@@ -1,6 +1,5 @@
 const assert = require('assert');
-const snapsync = require('./build/Release/snapsync.node');
-
+const snapsync = require('./build/Release/gts-snapsync.node');
 // wrap callbacks in promises
 
 function async_snap_create(dir, file) {
@@ -49,9 +48,10 @@ function doSyncTests() {
 	assert.ifError(snapsync.sync.patch('test-targets-v1v2.patch', 'test-targets-v1', 'test-targets-v2'));
 }
 
+
 doSyncTests();
 doAsyncTests();
 
 setTimeout(function () {
-    console.log('wait completed'); 
+    console.log('wait completed');
 }, 1000);

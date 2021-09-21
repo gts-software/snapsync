@@ -4,6 +4,7 @@ An excellent library and toolset for optimized transfers of single files and dir
 
 ![npm downloads total](https://img.shields.io/npm/dt/gts-snapsync.svg) ![npm version](https://img.shields.io/npm/v/gts-snapsync.svg) ![npm license](https://img.shields.io/npm/l/gts-snapsync.svg)
 
+
 ## Installation
 
 Install the `gts-snapsync` module via
@@ -34,3 +35,10 @@ snapsync.snap.create('dir', 'file', (error) => {
 // or 
 await snapsync.snap.asyncCreate('dir','file');
 ```
+
+## Changelog
+> #### v1.2.0
+> - Added support for Node 12+
+> - Dropped support for Node < 8
+> - Added `custom_modules` containing a modified version of `node-pre-gyp-github` since the original does not work anymore.
+> - Use latest version of `@octokit/rest` to work with Github API

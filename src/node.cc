@@ -34,7 +34,7 @@ public:
 		v8::Local<v8::Value> argv[] = {
 			Nan::Null(), // no error occured
 		};
-		Nan::Call(callback->GetFunction(), Nan::GetCurrentContext()->Global(), 1, argv);
+		Nan::Call(*callback, Nan::GetCurrentContext()->Global(), 1, argv);
 	}
 
 	void HandleErrorCallback() {
@@ -42,7 +42,7 @@ public:
 		v8::Local<v8::Value> argv[] = {
 			Nan::New(this->ErrorMessage()).ToLocalChecked(), // return error message
 		};
-		Nan::Call(callback->GetFunction(), Nan::GetCurrentContext()->Global(), 1, argv);
+		Nan::Call(*callback, Nan::GetCurrentContext()->Global(), 1, argv);
 	}
 };
 
@@ -59,13 +59,13 @@ NAN_METHOD(snapCreate) {
 		return Nan::ThrowError(Nan::New("argument 1 must be a string").ToLocalChecked());
 	}
 
-	boost::filesystem::path directory(*Nan::Utf8String(info[0]->ToString()));
+	boost::filesystem::path directory(*Nan::Utf8String(Nan::To<v8::String>(info[0]).ToLocalChecked()));
 
 	if(!info[1]->IsString()) {
 		return Nan::ThrowError(Nan::New("argument 2 must be a string").ToLocalChecked());
 	}
 
-	boost::filesystem::path image(*Nan::Utf8String(info[1]->ToString()));
+	boost::filesystem::path image(*Nan::Utf8String(Nan::To<v8::String>(info[1]).ToLocalChecked()));
 
 	if(nparams == 3) {
 		if(info[2]->IsFunction()) {
@@ -117,7 +117,7 @@ public:
 		v8::Local<v8::Value> argv[] = {
 			Nan::Null(), // no error occured
 		};
-		Nan::Call(callback->GetFunction(), Nan::GetCurrentContext()->Global(), 1, argv);
+		Nan::Call(*callback, Nan::GetCurrentContext()->Global(), 1, argv);
 	}
 
 	void HandleErrorCallback() {
@@ -125,7 +125,7 @@ public:
 		v8::Local<v8::Value> argv[] = {
 			Nan::New(this->ErrorMessage()).ToLocalChecked(), // return error message
 		};
-		Nan::Call(callback->GetFunction(), Nan::GetCurrentContext()->Global(), 1, argv);
+		Nan::Call(*callback, Nan::GetCurrentContext()->Global(), 1, argv);
 	}
 };
 
@@ -142,13 +142,13 @@ NAN_METHOD(snapExtract) {
 		return Nan::ThrowError(Nan::New("argument 1 must be a string").ToLocalChecked());
 	}
 
-	boost::filesystem::path image(*Nan::Utf8String(info[0]->ToString()));
+	boost::filesystem::path image(*Nan::Utf8String(Nan::To<v8::String>(info[0]).ToLocalChecked()));
 
 	if(!info[1]->IsString()) {
 		return Nan::ThrowError(Nan::New("argument 2 must be a string").ToLocalChecked());
 	}
 
-	boost::filesystem::path directory(*Nan::Utf8String(info[1]->ToString()));
+	boost::filesystem::path directory(*Nan::Utf8String(Nan::To<v8::String>(info[1]).ToLocalChecked()));
 
 	if(nparams == 3) {
 		if(info[2]->IsFunction()) {
@@ -204,7 +204,7 @@ public:
 		v8::Local<v8::Value> argv[] = {
 			Nan::Null(), // no error occured
 		};
-		Nan::Call(callback->GetFunction(), Nan::GetCurrentContext()->Global(), 1, argv);
+		Nan::Call(*callback, Nan::GetCurrentContext()->Global(), 1, argv);
 	}
 
 	void HandleErrorCallback() {
@@ -212,7 +212,7 @@ public:
 		v8::Local<v8::Value> argv[] = {
 			Nan::New(this->ErrorMessage()).ToLocalChecked(), // return error message
 		};
-		Nan::Call(callback->GetFunction(), Nan::GetCurrentContext()->Global(), 1, argv);
+		Nan::Call(*callback, Nan::GetCurrentContext()->Global(), 1, argv);
 	}
 };
 
@@ -231,13 +231,13 @@ NAN_METHOD(syncSignature) {
 		return Nan::ThrowError(Nan::New("argument 1 must be a string").ToLocalChecked());
 	}
 
-	boost::filesystem::path basePath(*Nan::Utf8String(info[0]->ToString()));
+	boost::filesystem::path basePath(*Nan::Utf8String(Nan::To<v8::String>(info[0]).ToLocalChecked()));
 
 	if(!info[1]->IsString()) {
 		return Nan::ThrowError(Nan::New("argument 2 must be a string").ToLocalChecked());
 	}
 
-	boost::filesystem::path signaturePath(*Nan::Utf8String(info[1]->ToString()));
+	boost::filesystem::path signaturePath(*Nan::Utf8String(Nan::To<v8::String>(info[1]).ToLocalChecked()));
 
 	if(nparams == 3) {
 		if(info[2]->IsInt32()) {
@@ -324,7 +324,7 @@ public:
 		v8::Local<v8::Value> argv[] = {
 			Nan::Null(), // no error occured
 		};
-		Nan::Call(callback->GetFunction(), Nan::GetCurrentContext()->Global(), 1, argv);
+		Nan::Call(*callback, Nan::GetCurrentContext()->Global(), 1, argv);
 	}
 
 	void HandleErrorCallback() {
@@ -332,7 +332,7 @@ public:
 		v8::Local<v8::Value> argv[] = {
 			Nan::New(this->ErrorMessage()).ToLocalChecked(), // return error message
 		};
-		Nan::Call(callback->GetFunction(), Nan::GetCurrentContext()->Global(), 1, argv);
+		Nan::Call(*callback, Nan::GetCurrentContext()->Global(), 1, argv);
 	}
 };
 
@@ -349,19 +349,19 @@ NAN_METHOD(syncDelta) {
 		return Nan::ThrowError(Nan::New("argument 1 must be a string").ToLocalChecked());
 	}
 
-	boost::filesystem::path signaturePath(*Nan::Utf8String(info[0]->ToString()));
+	boost::filesystem::path signaturePath(*Nan::Utf8String(Nan::To<v8::String>(info[0]).ToLocalChecked()));
 
 	if(!info[1]->IsString()) {
 		return Nan::ThrowError(Nan::New("argument 2 must be a string").ToLocalChecked());
 	}
 
-	boost::filesystem::path targetPath(*Nan::Utf8String(info[1]->ToString()));
+	boost::filesystem::path targetPath(*Nan::Utf8String(Nan::To<v8::String>(info[1]).ToLocalChecked()));
 
 	if(!info[2]->IsString()) {
 		return Nan::ThrowError(Nan::New("argument 3 must be a string").ToLocalChecked());
 	}
 
-	boost::filesystem::path patchPath(*Nan::Utf8String(info[2]->ToString()));
+	boost::filesystem::path patchPath(*Nan::Utf8String(Nan::To<v8::String>(info[2]).ToLocalChecked()));
 
 	if(nparams == 4) {
 		if(info[3]->IsFunction()) {
@@ -415,7 +415,7 @@ public:
 		v8::Local<v8::Value> argv[] = {
 			Nan::Null(), // no error occured
 		};
-		Nan::Call(callback->GetFunction(), Nan::GetCurrentContext()->Global(), 1, argv);
+		Nan::Call(*callback, Nan::GetCurrentContext()->Global(), 1, argv);
 	}
 
 	void HandleErrorCallback() {
@@ -423,7 +423,7 @@ public:
 		v8::Local<v8::Value> argv[] = {
 			Nan::New(this->ErrorMessage()).ToLocalChecked(), // return error message
 		};
-		Nan::Call(callback->GetFunction(), Nan::GetCurrentContext()->Global(), 1, argv);
+		Nan::Call(*callback, Nan::GetCurrentContext()->Global(), 1, argv);
 	}
 };
 
@@ -440,19 +440,19 @@ NAN_METHOD(syncPatch) {
 		return Nan::ThrowError(Nan::New("argument 1 must be a string").ToLocalChecked());
 	}
 
-	boost::filesystem::path patchPath(*Nan::Utf8String(info[0]->ToString()));
+	boost::filesystem::path patchPath(*Nan::Utf8String(Nan::To<v8::String>(info[0]).ToLocalChecked()));
 
 	if(!info[1]->IsString()) {
 		return Nan::ThrowError(Nan::New("argument 2 must be a string").ToLocalChecked());
 	}
 
-	boost::filesystem::path basePath(*Nan::Utf8String(info[1]->ToString()));
+	boost::filesystem::path basePath(*Nan::Utf8String(Nan::To<v8::String>(info[1]).ToLocalChecked()));
 
 	if(!info[2]->IsString()) {
 		return Nan::ThrowError(Nan::New("argument 3 must be a string").ToLocalChecked());
 	}
 
-	boost::filesystem::path targetPath(*Nan::Utf8String(info[2]->ToString()));
+	boost::filesystem::path targetPath(*Nan::Utf8String(Nan::To<v8::String>(info[2]).ToLocalChecked()));
 
 	if(nparams == 4) {
 		if(info[3]->IsFunction()) {
@@ -481,17 +481,17 @@ NAN_MODULE_INIT(init) {
 	// snap methods
 	auto snap = Nan::New<v8::Object>();
 
-	Nan::Set(snap, Nan::New("create").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(snapCreate)->GetFunction());
-	Nan::Set(snap, Nan::New("extract").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(snapExtract)->GetFunction());
+	Nan::Set(snap, Nan::New("create").ToLocalChecked(), Nan::GetFunction(Nan::New<v8::FunctionTemplate>(snapCreate)).ToLocalChecked());
+	Nan::Set(snap, Nan::New("extract").ToLocalChecked(), Nan::GetFunction(Nan::New<v8::FunctionTemplate>(snapExtract)).ToLocalChecked());
 	
 	Nan::Set(target, Nan::New("snap").ToLocalChecked(), snap);
 
 	// sync methods
 	auto sync = Nan::New<v8::Object>();
 
-	Nan::Set(sync, Nan::New("signature").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(syncSignature)->GetFunction());
-	Nan::Set(sync, Nan::New("delta").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(syncDelta)->GetFunction());
-	Nan::Set(sync, Nan::New("patch").ToLocalChecked(), Nan::New<v8::FunctionTemplate>(syncPatch)->GetFunction());
+	Nan::Set(sync, Nan::New("signature").ToLocalChecked(), Nan::GetFunction(Nan::New<v8::FunctionTemplate>(syncSignature)).ToLocalChecked());
+	Nan::Set(sync, Nan::New("delta").ToLocalChecked(), Nan::GetFunction(Nan::New<v8::FunctionTemplate>(syncDelta)).ToLocalChecked());
+	Nan::Set(sync, Nan::New("patch").ToLocalChecked(), Nan::GetFunction(Nan::New<v8::FunctionTemplate>(syncPatch)).ToLocalChecked());
 
 	Nan::Set(target, Nan::New("sync").ToLocalChecked(), sync);
 }

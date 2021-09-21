@@ -1,6 +1,6 @@
 {
   "name": "gts-snapsync",
-  "version": "1.1.6",
+  "version": "1.2.0",
   "description": "An excellent library and toolset for optimized transfers of single files and directory snapshots based on librsync.",
   "main": "./index.js",
   "author": "Niklas Salmoukas <niklas@salmoukas.com>",
@@ -17,16 +17,23 @@
     "remote_path": "{version}"
   },
   "dependencies": {
-    "nan": "^2.8.0",
-    "node-pre-gyp": "^0.6.39",
-    "node-pre-gyp-github": "^1.3.1"
+    "@mapbox/node-pre-gyp": "^1.0.5",
+    "nan": "^2.15.0"
+  },
+  "devDependencies": {
+    "node-pre-gyp-github": "file:./custom_modules/node-pre-gyp-github"
   },
   "bundledDependencies": [
-    "node-pre-gyp",
-    "node-pre-gyp-github"
+    "@mapbox/node-pre-gyp"
   ],
+  "resolutions": {
+    "@octokit/rest": "^18.10.0",
+    "node-pre-gyp-github": "file:./custom_modules/node-pre-gyp-github"
+  },
   "scripts": {
+    "preinstall": "npx npm-force-resolutions",
     "install": "node-pre-gyp install --fallback-to-build",
+    "prepublish": "node test.js",
     "prepublishOnly": "npm ls",
     "prebuild": "node-pre-gyp configure build package",
     "prebuild-publish": "node-pre-gyp-github publish --release"
