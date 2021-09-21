@@ -33,7 +33,6 @@
   "scripts": {
     "preinstall": "npx npm-force-resolutions",
     "install": "node-pre-gyp install --fallback-to-build",
-    "prepublish": "node test.js",
     "prepublishOnly": "npm ls",
     "prebuild": "node-pre-gyp configure build package",
     "prebuild-publish": "node-pre-gyp-github publish --release"
