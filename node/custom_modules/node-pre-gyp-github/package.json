@@ -33,7 +33,7 @@
   },
   "bundleDependencies": false,
   "dependencies": {
-    "@octokit/rest": "^15.9.5",
+    "@octokit/rest": "^18.10.0",
     "commander": "^2.17.0",
     "mime-types": "^2.1.19"
   },

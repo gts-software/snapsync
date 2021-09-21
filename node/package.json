@@ -24,10 +24,8 @@
     "@mapbox/node-pre-gyp"
   ],
   "resolutions": {
-    "@octokit/rest": "^18.10.0"
   },
   "scripts": {
-    "preinstall": "npx npm-force-resolutions",
     "install": "node-pre-gyp install --fallback-to-build",
     "prepublishOnly": "npm ls",
     "prebuild": "node-pre-gyp configure build package",
