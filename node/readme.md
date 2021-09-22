@@ -37,7 +37,7 @@ await snapsync.snap.asyncCreate('dir','file');
 ```
 
 ## Changelog
-> #### v1.2.2
+> #### v1.2.3
 > - Added support for Node 12+
 > - Dropped support for Node < 8
 > - Added `custom_modules` containing a modified version of `node-pre-gyp-github` since the original does not work anymore.
