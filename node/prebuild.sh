@@ -60,6 +60,10 @@ then
     docker run -it --rm -e NODE_PRE_GYP_GITHUB_TOKEN="$NODE_PRE_GYP_GITHUB_TOKEN" "snapsync-node-build-target:$TARGET_NAME" /workspace/node/prebuild.sh
   done
 else
+  # install dependencies
+  cd "$ROOTDIR/node/custom_modules"
+  npm install -g ./node-pre-gyp-github
+
   # build dependencies, libraries and tools
   cd "$ROOTDIR"
   ./build.sh
